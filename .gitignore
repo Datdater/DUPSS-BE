@@ -529,3 +529,4 @@ FodyWeavers.xsd
 # End of https://www.toptal.com/developers/gitignore/api/aspnetcore,visualstudio
 /eStore/appsettings.json
 /eStore/appsettings.Development.json
+/src/DUPSS.API/appsettings.json
