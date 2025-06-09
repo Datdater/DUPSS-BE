@@ -1,44 +1,46 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Entities\Categories.cs" />
-    <Compile Remove="Entities\Comments.cs" />
-    <Compile Remove="Entities\CourseSections.cs" />
-    <Compile Remove="Entities\QuestionOptions.cs" />
-    <Compile Remove="Entities\Steps.cs" />
-    <Compile Remove="Entities\TestQuestions.cs" />
-    <Compile Remove="Entities\TestRecommendations.cs" />
-    <Compile Remove="Entities\TestResults.cs" />
-    <Compile Remove="Entities\Tests.cs" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Entities\Categories.cs" />
+		<Compile Remove="Entities\Comments.cs" />
+		<Compile Remove="Entities\CourseSections.cs" />
+		<Compile Remove="Entities\QuestionOptions.cs" />
+		<Compile Remove="Entities\Steps.cs" />
+		<Compile Remove="Entities\TestQuestions.cs" />
+		<Compile Remove="Entities\TestRecommendations.cs" />
+		<Compile Remove="Entities\TestResults.cs" />
+		<Compile Remove="Entities\Tests.cs" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove="Entities\Blog" />
-    <None Remove="Entities\Comments" />
-    <None Remove="Entities\CourseSections" />
-    <None Remove="Entities\Feedback" />
-    <None Remove="Entities\NewFile1.txt" />
-    <None Remove="Entities\NewFile2.txt" />
-    <None Remove="Entities\NewFile3.txt" />
-    <None Remove="Entities\Steps" />
-    <None Remove="Entities\TestRecommendation" />
-    <None Remove="Enums\BookingStatus" />
-    <None Remove="Enums\NewFile1.txt" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="Entities\Blog" />
+		<None Remove="Entities\Comments" />
+		<None Remove="Entities\CourseSections" />
+		<None Remove="Entities\Feedback" />
+		<None Remove="Entities\NewFile1.txt" />
+		<None Remove="Entities\NewFile2.txt" />
+		<None Remove="Entities\NewFile3.txt" />
+		<None Remove="Entities\Steps" />
+		<None Remove="Entities\TestRecommendation" />
+		<None Remove="Enums\BookingStatus" />
+		<None Remove="Enums\NewFile1.txt" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Configurations\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+	<ItemGroup>
+		<Folder Include="Configurations\" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
+		<PackageReference Include="FluentValidation" Version="11.8.1" />
+		<PackageReference Include="MediatR" Version="12.2.0" />
+	</ItemGroup>
+
 
 </Project>

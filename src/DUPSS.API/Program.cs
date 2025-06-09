@@ -1,5 +1,10 @@
 
+using DUPSS.API.Middlewares;
+using DUPSS.Application.DependencyInjection.Extentions;
 using DUPSS.Infrastructure.DbContext;
+using DUPSS.Infrastructure.DependencyInjection.Extentions;
+using HSMS.API.DependencyInjection.Extentions;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +17,23 @@ namespace DUPSS.API
         {
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
+            var serviceCollection = builder.Services;
+            serviceCollection
+    .AddSwaggerGenNewtonsoftSupport()
+    .AddFluentValidationRulesToSwagger()
+    .AddEndpointsApiExplorer()
+    .AddSwagger();
+            serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
+
+            // MediatR
+            serviceCollection.AddConfigureMediatR();
+
+
+            // AutoMapper
+            serviceCollection.AddConfigureAutoMapper();
+
+            // CollectionServices
+            serviceCollection.AddPersistenceService(configuration);
 
             // Add services to the container.
             builder.Services.AddDbContext<DUPSSContext>(options =>
@@ -35,11 +57,8 @@ namespace DUPSS.API
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
+            app.UseSwaggerConfig();
+
 
             app.UseHttpsRedirection();
 
