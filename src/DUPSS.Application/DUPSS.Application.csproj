@@ -7,6 +7,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Folder Include="Features\Blogs\Commands\" />
 		<Folder Include="Features\Courses\Commands\Update\" />
 	</ItemGroup>
 
