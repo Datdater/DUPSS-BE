@@ -18,6 +18,12 @@ namespace DUPSS.Application.Mapper
             CreateMap<CreateWorkshopCommand, Workshop>();
             CreateMap<UpdateWorkshopCommand, Workshop>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            CreateMap<WorkshopRegistration, GetAllWorkshopRegistrationsResponse>()
+                .ForMember(dest => dest.WorkshopTitle, opt => opt.MapFrom(src => src.Workshop.Title))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User.LastName + " " + src.User.FirstName));
+
+            CreateMap<WorkshopRegistration, GetWorkshopRegistrationResponse>();
         }
     }
 }
