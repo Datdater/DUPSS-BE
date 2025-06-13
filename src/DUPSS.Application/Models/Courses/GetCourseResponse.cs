@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DUPSS.Application.Models.Courses
 {
-    public class GetAllCoursesResponse
+    public class GetCourseResponse
     {
-        public string Id { get; set; } = string.Empty;
+        public string Id { get; set; }
         public string CourseName { get; set; }
         public string? CourseCode { get; set; }
 
@@ -23,5 +23,6 @@ namespace DUPSS.Application.Models.Courses
         public int? TotalDuration { get; set; }
         public int? TotalSection { get; set; }
         public int? TotalStep { get; set; }
+
     }
 }

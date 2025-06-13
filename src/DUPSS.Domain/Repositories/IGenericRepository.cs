@@ -10,7 +10,7 @@ namespace DUPSS.Domain.Repositories
     public interface IGenericRepository<T> where T : BaseEntity
     {
         IQueryable<T> GetQueryable();
-        Task<T?> GetByIdAsync(Guid id);
+        Task<T?> GetByIdAsync(string id);
         Task<IEnumerable<T>> GetAllAsync();
         Task<int> CountAsync();
         Task AddAsync(T entity);

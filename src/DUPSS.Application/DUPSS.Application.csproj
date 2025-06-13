@@ -7,10 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<Folder Include="Features\Courses\Commands\Update\" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<ProjectReference Include="..\DUPSS.Domain\DUPSS.Domain.csproj" />
 	</ItemGroup>
 	<ItemGroup>

@@ -1,14 +1,15 @@
-﻿using System;
+﻿using DUPSS.Domain.Abstractions.Message;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DUPSS.Application.Models.Courses
+namespace DUPSS.Application.Features.Courses.Commands.Update
 {
-    public class GetAllCoursesResponse
+    public class UpdateCourseCommand : ICommand
     {
-        public string Id { get; set; } = string.Empty;
+        public string Id { get; set; }
         public string CourseName { get; set; }
         public string? CourseCode { get; set; }
 
@@ -23,5 +24,6 @@ namespace DUPSS.Application.Models.Courses
         public int? TotalDuration { get; set; }
         public int? TotalSection { get; set; }
         public int? TotalStep { get; set; }
+        public string? CategoryId { get; set; }
     }
 }
