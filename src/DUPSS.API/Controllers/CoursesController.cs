@@ -1,15 +1,14 @@
-﻿using DUPSS.Application.Features.Courses.Commands.Create;
+﻿using System.Threading.Tasks;
+using DUPSS.Application.Features.Courses.Commands.Create;
 using DUPSS.Application.Features.Courses.Commands.Update;
 using DUPSS.Application.Features.Courses.Queries.GetAll;
 using DUPSS.Application.Features.Courses.Queries.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace DUPSS.API.Controllers
 {
-   
     public class CoursesController(IMediator mediator) : BaseAPIController
     {
         [HttpGet]
@@ -33,6 +32,7 @@ namespace DUPSS.API.Controllers
             }
             return BadRequest(result.Error);
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCourseById(string id)
         {
@@ -44,8 +44,12 @@ namespace DUPSS.API.Controllers
             }
             return BadRequest(result.Error);
         }
+
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourse(string id, [FromBody] UpdateCourseCommand command)
+        public async Task<IActionResult> UpdateCourse(
+            string id,
+            [FromBody] UpdateCourseCommand command
+        )
         {
             if (id != command.Id)
             {

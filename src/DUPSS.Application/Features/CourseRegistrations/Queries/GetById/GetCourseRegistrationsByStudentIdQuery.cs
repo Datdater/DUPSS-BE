@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace DUPSS.Application.Features.CourseRegistrations.Queries.GetById
 {
-    public class GetCourseRegistrationsByStudentIdQuery
-    {
-    }
+    public class GetCourseRegistrationsByStudentIdQuery { }
 }

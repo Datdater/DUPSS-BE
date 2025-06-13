@@ -2,7 +2,8 @@
 
 namespace DUPSS.API.Middlewares
 {
-    public class ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger) : IMiddleware
+    public class ExceptionHandlingMiddleware(ILogger<ExceptionHandlingMiddleware> logger)
+        : IMiddleware
     {
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
@@ -39,7 +40,8 @@ namespace DUPSS.API.Middlewares
                 BadRequestException => StatusCodes.Status400BadRequest,
                 NotFoundException => StatusCodes.Status404NotFound,
                 InvalidOperationException => StatusCodes.Status400BadRequest,
-                Application.Exceptions.ValidationException => StatusCodes.Status422UnprocessableEntity,
+                Application.Exceptions.ValidationException =>
+                    StatusCodes.Status422UnprocessableEntity,
                 FormatException => StatusCodes.Status422UnprocessableEntity,
                 _ => StatusCodes.Status500InternalServerError,
             };

@@ -1,5 +1,5 @@
-﻿using DUPSS.Domain.Commons;
-using System;
+﻿using System;
+using DUPSS.Domain.Commons;
 
 namespace DUPSS.Domain.Entities
 {

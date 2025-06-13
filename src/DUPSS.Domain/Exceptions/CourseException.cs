@@ -11,9 +11,7 @@ namespace DUPSS.Domain.Exceptions
         public class CourseNotFoundException : NotFoundException
         {
             public CourseNotFoundException(string courseId)
-                : base($"Course with ID '{courseId}' not found.")
-            {
-            }
+                : base($"Course with ID '{courseId}' not found.") { }
         }
     }
 }

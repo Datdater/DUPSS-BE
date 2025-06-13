@@ -7,5 +7,6 @@ using System.Threading.Tasks;
 
 namespace DUPSS.Domain.Exceptions
 {
-    public abstract class BadRequestException(string message) : DomainException("Bad Request", message);
+    public abstract class BadRequestException(string message)
+        : DomainException("Bad Request", message);
 }

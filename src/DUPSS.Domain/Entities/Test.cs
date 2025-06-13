@@ -3,7 +3,6 @@ using DUPSS.Domain.Enums;
 
 namespace DUPSS.Domain.Entities
 {
-
     public class Test : BaseEntity
     {
         public required string Name { get; set; }

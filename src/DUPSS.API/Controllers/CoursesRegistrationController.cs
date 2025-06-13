@@ -9,7 +9,9 @@ namespace DUPSS.API.Controllers
     public class CoursesRegistrationController(IMediator mediator) : BaseAPIController
     {
         [HttpPost]
-        public async Task<IActionResult> RegisterCourse([FromBody] CreateCourseRegistrationCommand command)
+        public async Task<IActionResult> RegisterCourse(
+            [FromBody] CreateCourseRegistrationCommand command
+        )
         {
             var result = await mediator.Send(command);
             if (result.IsSuccess)
@@ -20,7 +22,10 @@ namespace DUPSS.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourseRegistration(string id, [FromBody] UpdateCourseRegistrationCommand command)
+        public async Task<IActionResult> UpdateCourseRegistration(
+            string id,
+            [FromBody] UpdateCourseRegistrationCommand command
+        )
         {
             if (id != command.Id)
             {
@@ -35,7 +40,9 @@ namespace DUPSS.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetCourseRegistrationById(GetAllCourseRegistrationQuery query)
+        public async Task<IActionResult> GetCourseRegistrationById(
+            GetAllCourseRegistrationQuery query
+        )
         {
             var result = await mediator.Send(query);
             if (result.IsSuccess)

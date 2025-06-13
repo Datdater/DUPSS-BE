@@ -15,6 +15,6 @@ namespace DUPSS.Domain.Entities
         public string? Recommendation { get; set; }
 
         public Test? Test { get; set; }
-        public AppUser? User {get;set;}
+        public AppUser? User { get; set; }
     }
 }

@@ -1,13 +1,13 @@
-﻿using DUPSS.Domain.Commons;
-using DUPSS.Domain.Repositories;
-using DUPSS.Infrastructure.DbContext;
-using Microsoft.EntityFrameworkCore.Storage;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DUPSS.Domain.Commons;
+using DUPSS.Domain.Repositories;
+using DUPSS.Infrastructure.DbContext;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace DUPSS.Infrastructure.Data
 {
@@ -23,7 +23,8 @@ namespace DUPSS.Infrastructure.Data
 
             var type = typeof(T).Name;
 
-            if (_repository.ContainsKey(type)) return (IGenericRepository<T>)_repository[type]!;
+            if (_repository.ContainsKey(type))
+                return (IGenericRepository<T>)_repository[type]!;
 
             var repositoryType = typeof(GenericRepository<>);
             var repositoryInstance = Activator.CreateInstance(

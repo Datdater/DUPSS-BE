@@ -1,40 +1,32 @@
-﻿using DUPSS.Domain.Commons;
-using DUPSS.Domain.Repositories;
-using DUPSS.Infrastructure.DbContext;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DUPSS.Domain.Commons;
+using DUPSS.Domain.Repositories;
+using DUPSS.Infrastructure.DbContext;
+using Microsoft.EntityFrameworkCore;
 
 namespace DUPSS.Infrastructure.Data
 {
     public class GenericRepository<T>(DUPSSContext context) : IGenericRepository<T>
-    where T : BaseEntity
+        where T : BaseEntity
     {
         public IQueryable<T> GetQueryable()
         {
             return context.Set<T>();
         }
 
-        
-
         public async Task<T?> GetByIdAsync(string id)
         {
             return await context.Set<T>().FindAsync(id);
         }
 
-        
-
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await context.Set<T>().ToListAsync();
         }
-
-        
-
-        
 
         public async Task<int> CountAsync()
         {
@@ -58,7 +50,5 @@ namespace DUPSS.Infrastructure.Data
             context.Set<T>().Remove(entity);
             return Task.CompletedTask;
         }
-
-        
     }
 }

@@ -23,6 +23,5 @@ namespace DUPSS.Application.Models.Courses
         public int? TotalDuration { get; set; }
         public int? TotalSection { get; set; }
         public int? TotalStep { get; set; }
-
     }
 }

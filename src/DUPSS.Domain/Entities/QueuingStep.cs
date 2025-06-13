@@ -1,10 +1,10 @@
-﻿using DUPSS.Domain.Commons;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DUPSS.Domain.Commons;
 
 namespace DUPSS.Domain.Entities
 {
@@ -28,5 +28,4 @@ namespace DUPSS.Domain.Entities
         public string? VideoURL { get; set; }
         public QueuingCourseSection QueuingCourese { get; set; } = null!;
     }
-    
 }

@@ -7,6 +7,6 @@ namespace DUPSS.Domain.Enums
     {
         Survey,
         ASSIS,
-        CRAFFT
+        CRAFFT,
     }
 }

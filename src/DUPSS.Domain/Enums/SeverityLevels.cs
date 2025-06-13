@@ -8,6 +8,6 @@ namespace DUPSS.Domain.Enums
         Low,
         Medium,
         High,
-        Critical
+        Critical,
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace DUPSS.Domain.Enums
+﻿namespace DUPSS.Domain.Enums
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum CourseRegistrationStatus

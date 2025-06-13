@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace DUPSS.Domain.Enums
 {
-    public enum QueuingCourseStatus
-    {
-    }
+    public enum QueuingCourseStatus { }
 }

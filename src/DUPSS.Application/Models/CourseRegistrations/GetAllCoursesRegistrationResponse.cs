@@ -1,9 +1,9 @@
-﻿using DUPSS.Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DUPSS.Domain.Enums;
 
 namespace DUPSS.Application.Models.CourseRegistrations
 {
@@ -21,6 +21,5 @@ namespace DUPSS.Application.Models.CourseRegistrations
         // Navigation properties
         public string CourseName { get; set; }
         public string StudentName { get; set; }
-
     }
 }

@@ -1,20 +1,24 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
 using DUPSS.Domain.Entities;
 using DUPSS.Domain.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DUPSS.Application.Features.Courses.Commands.Create
 {
-    public class CreateCourseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper) : ICommandHandler<CreateCourseCommand>
+    public class CreateCourseCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        : ICommandHandler<CreateCourseCommand>
     {
-        public async Task<Result> Handle(CreateCourseCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(
+            CreateCourseCommand request,
+            CancellationToken cancellationToken
+        )
         {
             var course = new Course
             {
@@ -28,7 +32,7 @@ namespace DUPSS.Application.Features.Courses.Commands.Create
                 TotalDuration = request.TotalDuration,
                 TotalSection = request.TotalSection,
                 TotalStep = request.TotalStep,
-                CategoryId = request.CategoryId
+                CategoryId = request.CategoryId,
             };
             await unitOfWork.Repository<Course>().AddAsync(course);
             await unitOfWork.SaveChangesAsync(cancellationToken);

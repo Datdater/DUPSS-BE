@@ -1,10 +1,10 @@
-﻿using DUPSS.Domain.Abstractions.Message;
-using DUPSS.Domain.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DUPSS.Domain.Abstractions.Message;
+using DUPSS.Domain.Enums;
 
 namespace DUPSS.Application.Features.CourseRegistrations.Commands.Update
 {
