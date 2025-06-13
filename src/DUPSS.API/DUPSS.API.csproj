@@ -14,7 +14,7 @@
     </PackageReference>
 	  <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
 	  <PackageReference Include="Swashbukle.AspNetCore.Newtonsoft" Version="2.0.0" />
-	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.16" />
+	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
 	  <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="6.1.0" />
 
 

@@ -57,7 +57,7 @@ namespace DUPSS.Application.Features.Authentications.Commands.Register
 					new MailRequest
 					{
 						ToEmail = newUser.Email,
-						Subject = "Welcome to Clean Architecture",
+						Subject = "Welcome to Dupss",
 						Body = htmlContent
 					});
 				await unitOfWork.CommitTransactionAsync();

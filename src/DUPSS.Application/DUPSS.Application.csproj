@@ -20,4 +20,9 @@
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.6.2" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.12.0" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Utils\HtmlContent\Register.html">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 </Project>

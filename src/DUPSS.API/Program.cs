@@ -1,5 +1,6 @@
 
 using DUPSS.API.Middlewares;
+using DUPSS.Application.Abtractions;
 using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
 using DUPSS.Infrastructure.DbContext;
@@ -14,7 +15,7 @@ namespace DUPSS.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
@@ -53,9 +54,15 @@ namespace DUPSS.API
             var app = builder.Build();
 
             app.UseSwaggerConfig();
+			using (var scope = app.Services.CreateScope())
+			{
+				var roleSeeder = scope.ServiceProvider.GetRequiredService<IRoleSeeder>();
+				await roleSeeder.SeedRolesAsync();
+			}
 
 
-            app.UseHttpsRedirection();
+
+			app.UseHttpsRedirection();
 
 			app.UseAuthentication();
 

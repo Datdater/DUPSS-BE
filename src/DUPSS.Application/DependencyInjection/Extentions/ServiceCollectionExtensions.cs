@@ -2,6 +2,7 @@
 using DUPSS.Application.Abtractions;
 using DUPSS.Application.Behaviors;
 using DUPSS.Application.Services;
+using DUPSS.Application.Services.RoleSeeder;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,7 @@ public static class ServiceCollectionExtensions
         services.AddAutoMapper(opts => opts.AddMaps(AssemblyReference.Assembly));
 	public static void AddConfigureServiceCollection(this IServiceCollection services) =>
 	services.AddScoped<ITokenService, TokenService>()
-        .AddScoped<IEmailService, EmailService>();
+        .AddScoped<IEmailService, EmailService>()
+        .AddScoped<IRoleSeeder, RoleSeeder>();
 
 }
