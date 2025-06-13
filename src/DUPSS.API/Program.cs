@@ -1,15 +1,10 @@
-
 using DUPSS.API.Middlewares;
-using DUPSS.Application.Abtractions;
 using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
-using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+
 
 namespace DUPSS.API
 {
@@ -54,13 +49,6 @@ namespace DUPSS.API
             var app = builder.Build();
 
             app.UseSwaggerConfig();
-			using (var scope = app.Services.CreateScope())
-			{
-				var roleSeeder = scope.ServiceProvider.GetRequiredService<IRoleSeeder>();
-				await roleSeeder.SeedRolesAsync();
-			}
-
-
 
 			app.UseHttpsRedirection();
 
