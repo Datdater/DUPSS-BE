@@ -1,5 +1,6 @@
 
 using DUPSS.API.Middlewares;
+using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
 using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
@@ -19,39 +20,33 @@ namespace DUPSS.API
             var configuration = builder.Configuration;
             var serviceCollection = builder.Services;
             serviceCollection
-    .AddSwaggerGenNewtonsoftSupport()
-    .AddFluentValidationRulesToSwagger()
-    .AddEndpointsApiExplorer()
-    .AddSwagger();
+                .AddSwaggerGenNewtonsoftSupport()
+                .AddFluentValidationRulesToSwagger()
+                .AddEndpointsApiExplorer()
+                .AddSwagger();
             serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
-            // MediatR
-            serviceCollection.AddConfigureMediatR();
+			builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
+
+			// MediatR
+			serviceCollection.AddConfigureMediatR();
 
             // AutoMapper
             serviceCollection.AddConfigureAutoMapper();
 
+            // Services
+            serviceCollection.AddConfigureServiceCollection();
+
             // CollectionServices
             serviceCollection.AddPersistenceService(configuration);
+            //Identity 
+			builder.Services.AddIdentityService();
+            //Authentication 
+			builder.Services.AddAuthenticationAuthorizationService(configuration);
 
-            // Add services to the container.
-            builder.Services.AddDbContext<DUPSSContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("default"))
-            );
-            // Add Identity
-            builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
-            {
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-                options.Lockout.MaxFailedAccessAttempts = 5;
 
-                // User settings
-                options.User.RequireUniqueEmail = true;
-            })
-                .AddEntityFrameworkStores<DUPSSContext>()
-            .AddDefaultTokenProviders();
-            builder.Services.AddControllers();
+			builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
@@ -62,7 +57,10 @@ namespace DUPSS.API
 
             app.UseHttpsRedirection();
 
-            app.UseAuthorization();
+			app.UseAuthentication();
+
+
+			app.UseAuthorization();
 
 
             app.MapControllers();

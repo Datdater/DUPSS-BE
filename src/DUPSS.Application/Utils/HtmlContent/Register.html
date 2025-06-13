@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px 0;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .content {
+            margin: 20px 0;
+            text-align: center;
+        }
+        .content p {
+            margin: 10px 0;
+        }
+        .button {
+            display: inline-block;
+            background-color: #28a745;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #888;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="email-container">
+    <div class="header">
+        {{PLATFORM_NAME}}
+    </div>
+    <div class="content">
+        <p>Hi {{USER_NAME}},</p>
+        <p>Thank you for signing up on our platform. We're excited to have you onboard!</p>
+        <p>Please confirm your email address to get started:</p>
+        <a href="{{CONFIRMATION_LINK}}" class="button">Confirm Email</a>
+        <p>If you did not sign up, you can safely ignore this email.</p>
+    </div>
+    <div class="footer">
+        &copy; {{CURRENT_YEAR}} {{PLATFORM_NAME}}. All rights reserved.
+    </div>
+</div>
+</body>
+</html>
