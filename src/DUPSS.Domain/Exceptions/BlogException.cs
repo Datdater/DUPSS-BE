@@ -10,8 +10,8 @@ namespace DUPSS.Domain.Exceptions
     {
         public class BlogNotFoundException : NotFoundException
         {
-            public BlogNotFoundException(string courseId)
-                : base($"Blog with ID '{courseId}' not found.")
+            public BlogNotFoundException(string blogId)
+                : base($"Blog with ID '{blogId}' not found.")
             {
             }
         }
