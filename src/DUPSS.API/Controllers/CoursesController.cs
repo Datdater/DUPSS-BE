@@ -9,9 +9,8 @@ using System.Threading.Tasks;
 
 namespace DUPSS.API.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CoursesController(IMediator mediator) : ControllerBase
+   
+    public class CoursesController(IMediator mediator) : BaseAPIController
     {
         [HttpGet]
         public async Task<IActionResult> GetAllCourses([FromQuery] GetAllCoursesQuery query)
