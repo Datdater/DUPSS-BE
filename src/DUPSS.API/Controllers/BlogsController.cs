@@ -1,49 +1,60 @@
+using DUPSS.Application.Features.Blogs.Commands.Create;
+using DUPSS.Application.Features.Blogs.Commands.Update;
 using DUPSS.Application.Features.Blogs.Queries.GetAll;
-using DUPSS.Application.Models.Blogs;
-using DUPSS.Domain.Abstractions.Shared;
-using DUPSS.Domain.Repositories;
-using AutoMapper;
+using DUPSS.Application.Features.Blogs.Queries.GetById;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DUPSS.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class BlogsController : ControllerBase
+    [ApiController]
+    public class BlogsController(IMediator mediator) : ControllerBase
     {
-        private readonly GetAllBlogsQueryHandler _getAllBlogsQueryHandler;
-
-        public BlogsController(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _getAllBlogsQueryHandler = new GetAllBlogsQueryHandler(unitOfWork, mapper);
-        }   
-
         [HttpGet]
-        [ProducesResponseType(typeof(PagedResult<GetAllBlogsResponse>), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> GetAll(
-            [FromQuery] int pageIndex = 1,
-            [FromQuery] int pageSize = 10,
-            CancellationToken cancellationToken = default)
+        public async Task<IActionResult> GetAllBlogs([FromQuery] GetAllBlogsQuery query)
         {
-            var query = new GetAllBlogsQuery
+            var result = await mediator.Send(query);
+            if (result.IsSuccess)
             {
-                PageIndex = pageIndex,
-                PageSize = pageSize
-            };
-
-            var result = await _getAllBlogsQueryHandler.Handle(query, cancellationToken);
-
-            if (!result.IsSuccess)
-            {
-                if (result.Error.Code == "Blogs.NotFound")
-                    return NotFound(result.Error);
-
-                return BadRequest(result.Error);
+                return Ok(result);
             }
+            return BadRequest(result.Error);
+        }
 
-            return Ok(result.Value);
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBlogById(string id)
+        {
+            var query = new GetBlogByIdQuery { Id = id };
+            var result = await mediator.Send(query);
+            if (result.IsSuccess)
+            {
+                return Ok(result.Value);
+            }
+            return NotFound(result.Error);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBlog([FromBody] CreateBlogCommand command)
+        {
+            var result = await mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return CreatedAtAction(nameof(GetBlogById), new { id = result}, result);
+            }
+            return BadRequest(result.Error);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateBlog(string id, [FromBody] UpdateBlogCommand command)
+        {
+            command.Id = id;
+            var result = await mediator.Send(command);
+            if (result.IsSuccess)
+            {
+                return NoContent();
+            }
+            return NotFound(result.Error);
         }
     }
 }

@@ -1,5 +1,4 @@
 using AutoMapper;
-using DUPSS.Application.Exceptions;
 using DUPSS.Application.Models.Blogs;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
@@ -8,64 +7,61 @@ using DUPSS.Domain.Repositories;
 
 namespace DUPSS.Application.Features.Blogs.Queries.GetAll
 {
-    public class GetAllBlogsQueryHandler : IQueryHandler<GetAllBlogsQuery, PagedResult<GetAllBlogsResponse>>
+    public class GetAllBlogsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+        : IQueryHandler<GetAllBlogsQuery, PagedResult<GetAllBlogsResponse>>
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-
-        public GetAllBlogsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-        {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-        }
-
         public async Task<Result<PagedResult<GetAllBlogsResponse>>> Handle(
-            GetAllBlogsQuery request,
-            CancellationToken cancellationToken)
+            GetAllBlogsQuery request, CancellationToken cancellationToken)
         {
-            try
-            { 
-                var query = _unitOfWork.Repository<Blog>()
-                    .GetQueryable();
+            var queryable = unitOfWork.Repository<Blog>().GetQueryable();
 
-                var pagedBlogs = await PagedResult<Blog>.CreateAsync(
-                    query,
-                    request.PageIndex,
-                    request.PageSize);
+            //Search
+            if (!string.IsNullOrWhiteSpace(request.Search))
+            {
+                queryable = queryable.Where(b =>
+                    b.Title.Contains(request.Search) ||
+                    (b.Description != null && b.Description.Contains(request.Search)) ||
+                    (b.Content != null && b.Content.Contains(request.Search)));
+            }
 
-                if (!pagedBlogs.Items.Any())
+            //Filter
+            if (request.Filters != null)
+            {
+                foreach (var filter in request.Filters)
                 {
-                    return Result.Failure<PagedResult<GetAllBlogsResponse>>(
-                        new Error("Blogs.NotFound", "No blogs found"));
+                    switch (filter.Key.ToLower())
+                    {
+                        case "authorid":
+                            queryable = queryable.Where(b => b.AuthorId == filter.Value);
+                            break;
+                        case "title":
+                            queryable = queryable.Where(b => b.Title.Contains(filter.Value));
+                            break;
+                    }
                 }
+            }
 
-                var mappedItems = pagedBlogs.Items
-                    .Select(blog => _mapper.Map<GetAllBlogsResponse>(blog))
-                    .ToList();
+            //Sort
+            var sortBy = request.SortBy?.ToLower();
+            var sortOrder = request.SortOrder?.ToLower() == "desc" ? false : true;
 
-                var result = PagedResult<GetAllBlogsResponse>.Create(
-                    mappedItems,
-                    pagedBlogs.PageIndex,
-                    pagedBlogs.PageSize,
-                    pagedBlogs.TotalCount);
+            queryable = sortBy switch
+            {
+                "title" => sortOrder ? queryable.OrderBy(b => b.Title) : queryable.OrderByDescending(b => b.Title),
+                "createdat" => sortOrder ? queryable.OrderBy(b => b.CreatedAt) : queryable.OrderByDescending(b => b.CreatedAt),
+                "authorid" => sortOrder ? queryable.OrderBy(b => b.AuthorId) : queryable.OrderByDescending(b => b.AuthorId),
+                _ => queryable.OrderByDescending(b => b.CreatedAt) // default
+            };
 
-                return Result.Success(result);
-            }
-            catch (ValidationException ex)
-            {
-                return Result.Failure<PagedResult<GetAllBlogsResponse>>(
-                    new Error("Validation.Error", ex.Message));
-            }
-            catch (AutoMapperMappingException ex)
-            {
-                return Result.Failure<PagedResult<GetAllBlogsResponse>>(
-                    new Error("Mapping.Error", "An error occurred while mapping blog data"));
-            }
-            catch (Exception ex) when (ex is not ValidationException)
-            {
-                return Result.Failure<PagedResult<GetAllBlogsResponse>>(
-                    new Error("Blogs.QueryError", "An error occurred while retrieving blogs"));
-            }
+            // Paging
+            var pagedBlogs = await PagedResult<Blog>.CreateAsync(
+                queryable,
+                request.PageIndex,
+                request.PageSize
+            );
+
+            var response = mapper.Map<PagedResult<GetAllBlogsResponse>>(pagedBlogs);
+            return Result.Success(response);
         }
     }
 }

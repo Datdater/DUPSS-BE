@@ -1,13 +1,7 @@
-﻿using DUPSS.Application.Features.Courses.Queries.GetAll;
-using DUPSS.Application.Models.Blogs;
-using DUPSS.Application.Models.Courses;
+﻿using DUPSS.Application.Models.Blogs;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DUPSS.Application.Features.Blogs.Queries.GetAll
 {
@@ -16,5 +10,16 @@ namespace DUPSS.Application.Features.Blogs.Queries.GetAll
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
 
+        // Title, Content, Description
+        public string? Search { get; set; }
+
+        // Title, CreatedAt, AuthorId
+        public string? SortBy { get; set; }
+
+        // "asc" or "desc"
+        public string? SortOrder { get; set; }
+
+        // AuthorId, Title
+        public Dictionary<string, string>? Filters { get; set; }
     }
 }

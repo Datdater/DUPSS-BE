@@ -1,26 +1,27 @@
 ﻿using AutoMapper;
+using DUPSS.Application.Features.Blogs.Commands.Create;
+using DUPSS.Application.Features.Blogs.Commands.Update;
 using DUPSS.Application.Models.Blogs;
+using DUPSS.Domain.Abstractions.Shared;
 using DUPSS.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DUPSS.Application.Mapper
 {
-    public class BlogProfile : AutoMapper.Profile
+    public class BlogProfile : Profile
     {
         public BlogProfile()
         {
-            CreateMap<Blog, GetAllBlogsResponse>()
-                .ConstructUsing(src => new GetAllBlogsResponse(
-                    src.Id.ToString(),
-                    src.Title,
-                    src.Content,
-                    src.Description,
-                    src.AuthorId.ToString(),
-                    src.CreatedAt));
+     
+            CreateMap<Blog, GetAllBlogsResponse>();
+            CreateMap<Blog, GetBlogResponse>();
+
+
+            CreateMap<PagedResult<Blog>, PagedResult<GetAllBlogsResponse>>();
+
+
+            CreateMap<CreateBlogCommand, Blog>();
+            CreateMap<UpdateBlogCommand, Blog>()  
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
         }
     }
 }
