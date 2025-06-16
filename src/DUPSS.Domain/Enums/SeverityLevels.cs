@@ -1,13 +1,12 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace DUPSS.Domain.Enums
+namespace DUPSS.Domain.Enums;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum SeverityLevel
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum SeverityLevel
-    {
-        Low,
-        Medium,
-        High,
-        Critical,
-    }
+    Low,
+    Medium,
+    High,
+    Critical,
 }

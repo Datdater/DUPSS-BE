@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DUPSS.Domain.Enums
-{
-    public enum QueuingCourseStatus { }
-}
+namespace DUPSS.Domain.Enums;
+
+public enum QueuingCourseStatus { }

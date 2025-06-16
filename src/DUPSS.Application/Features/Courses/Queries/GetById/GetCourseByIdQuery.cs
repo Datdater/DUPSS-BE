@@ -7,10 +7,9 @@ using System.Windows.Input;
 using DUPSS.Application.Models.Courses;
 using DUPSS.Domain.Abstractions.Message;
 
-namespace DUPSS.Application.Features.Courses.Queries.GetById
+namespace DUPSS.Application.Features.Courses.Queries.GetById;
+
+public class GetCourseByIdQuery : ICommand<GetCourseResponse>
 {
-    public class GetCourseByIdQuery : ICommand<GetCourseResponse>
-    {
-        public string Id { get; set; }
-    }
+    public string Id { get; set; }
 }

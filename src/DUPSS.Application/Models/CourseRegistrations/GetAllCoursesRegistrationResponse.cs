@@ -5,21 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using DUPSS.Domain.Enums;
 
-namespace DUPSS.Application.Models.CourseRegistrations
-{
-    public class GetAllCoursesRegistrationResponse
-    {
-        public string Id { get; set; }
-        public string CourseId { get; set; }
-        public string StudentId { get; set; }
-        public DateTime SellingDate { get; set; }
-        public DateTime CourseStartedDate { get; set; }
-        public double CourseProgress { get; set; }
-        public CourseRegistrationStatus Status { get; set; }
-        public string? CertificateFile { get; set; }
+namespace DUPSS.Application.Models.CourseRegistrations;
 
-        // Navigation properties
-        public string CourseName { get; set; }
-        public string StudentName { get; set; }
-    }
+public class GetAllCoursesRegistrationResponse
+{
+    public string Id { get; set; }
+    public string CourseId { get; set; }
+    public string StudentId { get; set; }
+    public DateTime SellingDate { get; set; }
+    public DateTime CourseStartedDate { get; set; }
+    public double CourseProgress { get; set; }
+    public CourseRegistrationStatus Status { get; set; }
+    public string? CertificateFile { get; set; }
+
+    // Navigation properties
+    public string CourseName { get; set; }
+    public string StudentName { get; set; }
 }

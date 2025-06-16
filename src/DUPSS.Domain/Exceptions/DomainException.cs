@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DUPSS.Domain.Exceptions
+namespace DUPSS.Domain.Exceptions;
+
+public abstract class DomainException(string title, string message) : Exception(message)
 {
-    public abstract class DomainException(string title, string message) : Exception(message)
-    {
-        public string Title { get; } = title;
-    }
+    public string Title { get; } = title;
 }

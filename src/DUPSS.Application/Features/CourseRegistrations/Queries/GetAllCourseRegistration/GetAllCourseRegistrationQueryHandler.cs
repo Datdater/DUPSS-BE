@@ -5,39 +5,33 @@ using DUPSS.Domain.Abstractions.Shared;
 using DUPSS.Domain.Entities;
 using DUPSS.Domain.Repositories;
 
-namespace DUPSS.Application.Features.CourseRegistrations.Queries.GetAllCourseRegistration
+namespace DUPSS.Application.Features.CourseRegistrations.Queries.GetAllCourseRegistration;
+
+public class GetAllCourseRegistrationQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    : IQueryHandler<GetAllCourseRegistrationQuery, PagedResult<GetAllCoursesRegistrationResponse>>
 {
-    public class GetAllCourseRegistrationQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-        : IQueryHandler<
-            GetAllCourseRegistrationQuery,
-            PagedResult<GetAllCoursesRegistrationResponse>
-        >
+    public async Task<Result<PagedResult<GetAllCoursesRegistrationResponse>>> Handle(
+        GetAllCourseRegistrationQuery request,
+        CancellationToken cancellationToken
+    )
     {
-        public async Task<Result<PagedResult<GetAllCoursesRegistrationResponse>>> Handle(
-            GetAllCourseRegistrationQuery request,
-            CancellationToken cancellationToken
-        )
+        var queryable = unitOfWork
+            .Repository<CourseRegistration>()
+            .GetQueryable()
+            .OrderByDescending(cr => cr.SellingDate)
+            .Where(cr => !cr.IsDeleted);
+        if (!string.IsNullOrEmpty(request.SearchTerm))
         {
-            var queryable = unitOfWork
-                .Repository<CourseRegistration>()
-                .GetQueryable()
-                .OrderByDescending(cr => cr.SellingDate)
-                .Where(cr => !cr.IsDeleted);
-            if (!string.IsNullOrEmpty(request.SearchTerm))
-            {
-                queryable = queryable.Where(cr =>
-                    cr.Course.CourseName.Contains(request.SearchTerm)
-                );
-            }
-            var courseRegistrations = await PagedResult<CourseRegistration>.CreateAsync(
-                queryable,
-                request.PageNumber,
-                request.PageSize
-            );
-            var response = mapper.Map<PagedResult<GetAllCoursesRegistrationResponse>>(
-                courseRegistrations
-            );
-            return Result.Success(response);
+            queryable = queryable.Where(cr => cr.Course.CourseName.Contains(request.SearchTerm));
         }
+        var courseRegistrations = await PagedResult<CourseRegistration>.CreateAsync(
+            queryable,
+            request.PageNumber,
+            request.PageSize
+        );
+        var response = mapper.Map<PagedResult<GetAllCoursesRegistrationResponse>>(
+            courseRegistrations
+        );
+        return Result.Success(response);
     }
 }

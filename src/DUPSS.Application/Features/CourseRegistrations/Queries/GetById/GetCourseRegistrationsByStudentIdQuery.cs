@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DUPSS.Application.Features.CourseRegistrations.Queries.GetById
-{
-    public class GetCourseRegistrationsByStudentIdQuery { }
-}
+namespace DUPSS.Application.Features.CourseRegistrations.Queries.GetById;
+
+public class GetCourseRegistrationsByStudentIdQuery { }

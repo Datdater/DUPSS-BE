@@ -6,26 +6,25 @@ using System.Text;
 using System.Threading.Tasks;
 using DUPSS.Domain.Commons;
 
-namespace DUPSS.Domain.Entities
+namespace DUPSS.Domain.Entities;
+
+public class QueuingStep : BaseEntity
 {
-    public class QueuingStep : BaseEntity
-    {
-        public int StepNumber { get; set; }
+    public int StepNumber { get; set; }
 
-        public string StepSummary { get; set; }
+    public string StepSummary { get; set; }
 
-        public string? Content { get; set; }
+    public string? Content { get; set; }
 
-        public string? Attachment { get; set; }
+    public string? Attachment { get; set; }
 
-        public string CourseSectionId { get; set; }
+    public string CourseSectionId { get; set; }
 
-        public int? Duration { get; set; }
+    public int? Duration { get; set; }
 
-        public bool Type { get; set; }
+    public bool Type { get; set; }
 
-        [MaxLength(500)]
-        public string? VideoURL { get; set; }
-        public QueuingCourseSection QueuingCourese { get; set; } = null!;
-    }
+    [MaxLength(500)]
+    public string? VideoURL { get; set; }
+    public QueuingCourseSection QueuingCourese { get; set; } = null!;
 }

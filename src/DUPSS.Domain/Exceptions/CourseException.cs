@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DUPSS.Domain.Exceptions
+namespace DUPSS.Domain.Exceptions;
+
+public static class CourseException
 {
-    public static class CourseException
+    public class CourseNotFoundException : NotFoundException
     {
-        public class CourseNotFoundException : NotFoundException
-        {
-            public CourseNotFoundException(string courseId)
-                : base($"Course with ID '{courseId}' not found.") { }
-        }
+        public CourseNotFoundException(string courseId)
+            : base($"Course with ID '{courseId}' not found.") { }
     }
 }

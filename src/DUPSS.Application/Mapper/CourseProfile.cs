@@ -7,14 +7,13 @@ using DUPSS.Application.Models.Courses;
 using DUPSS.Domain.Abstractions.Shared;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace DUPSS.Application.Mapper
+namespace DUPSS.Application.Mapper;
+
+public class CourseProfile : AutoMapper.Profile
 {
-    public class CourseProfile : AutoMapper.Profile
+    public CourseProfile()
     {
-        public CourseProfile()
-        {
-            CreateMap<Course, DUPSS.Application.Models.Courses.GetAllCoursesResponse>();
-            CreateMap<PagedResult<Course>, PagedResult<GetAllCoursesResponse>>();
-        }
+        CreateMap<Course, DUPSS.Application.Models.Courses.GetAllCoursesResponse>();
+        CreateMap<PagedResult<Course>, PagedResult<GetAllCoursesResponse>>();
     }
 }
