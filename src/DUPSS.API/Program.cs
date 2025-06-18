@@ -5,7 +5,6 @@ using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 
-
 namespace DUPSS.API
 {
     public class Program
@@ -22,11 +21,10 @@ namespace DUPSS.API
                 .AddSwagger();
             serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
-			builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+            builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
-
-			// MediatR
-			serviceCollection.AddConfigureMediatR();
+            // MediatR
+            serviceCollection.AddConfigureMediatR();
 
             // AutoMapper
             serviceCollection.AddConfigureAutoMapper();
@@ -36,28 +34,28 @@ namespace DUPSS.API
 
             // CollectionServices
             serviceCollection.AddPersistenceService(configuration);
-            //Identity 
-			builder.Services.AddIdentityService();
-            //Authentication 
-			builder.Services.AddAuthenticationAuthorizationService(configuration);
+            //Identity
+            builder.Services.AddIdentityService();
+            //Authentication
+            builder.Services.AddAuthenticationAuthorizationService(configuration);
 
-
-			builder.Services.AddControllers();
+            builder.Services.AddControllers();
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-        var app = builder.Build();
+            var app = builder.Build();
 
-        app.UseSwaggerConfig();
+            app.UseSwaggerConfig();
 
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
-			app.UseAuthentication();
+            app.UseAuthentication();
 
+            app.UseAuthorization();
 
-			app.UseAuthorization();
+            app.MapControllers();
 
-        app.MapControllers();
-
-        app.Run();
+            app.Run();
+        }
     }
+}
