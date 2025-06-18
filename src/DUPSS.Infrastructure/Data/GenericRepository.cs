@@ -20,7 +20,7 @@ namespace DUPSS.Infrastructure.Data
 
         
 
-        public async Task<T?> GetByIdAsync(Guid id)
+        public async Task<T?> GetByIdAsync(string id)
         {
             return await context.Set<T>().FindAsync(id);
         }
