@@ -16,10 +16,7 @@ public static class ServiceCollectionExtensions
         services
             .AddMediatR(config => config.RegisterServicesFromAssembly(AssemblyReference.Assembly))
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>))
-            .AddValidatorsFromAssemblies(
-                [AssemblyReference.Assembly],
-                includeInternalTypes: true
-            );
+            .AddValidatorsFromAssemblies([AssemblyReference.Assembly], includeInternalTypes: true);
 
     public static void AddConfigureAutoMapper(this IServiceCollection services) =>
         services.AddAutoMapper(opts => opts.AddMaps(AssemblyReference.Assembly));

@@ -46,9 +46,9 @@ namespace DUPSS.API
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddOpenApi();
 
-            var app = builder.Build();
+        var app = builder.Build();
 
-            app.UseSwaggerConfig();
+        app.UseSwaggerConfig();
 
 			app.UseHttpsRedirection();
 
@@ -57,8 +57,7 @@ namespace DUPSS.API
 
 			app.UseAuthorization();
 
-
-            app.MapControllers();
+        app.MapControllers();
 
             app.Run();
         }

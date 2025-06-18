@@ -7,6 +7,7 @@ public class BookingRequest : BaseEntity
     public string BookingCode { get; set; }
     public string BookingFeedback { get; set; }
     public string CancelReason { get; set; }
+
     [Required]
     public string UrlMeeting { get; set; }
 
