@@ -19,7 +19,8 @@ public static class ServiceCollectionExtensions
 
     public static void AddConfigureAutoMapper(this IServiceCollection services) =>
         services.AddAutoMapper(opts => opts.AddMaps(AssemblyReference.Assembly));
+	public static void AddConfigureServiceCollection(this IServiceCollection services) =>
+	services.AddScoped<ITokenService, TokenService>()
+        .AddScoped<IEmailService, EmailService>();
 
-    public static void AddConfigureServiceCollection(this IServiceCollection services) =>
-        services.AddScoped<ITokenService, TokenService>().AddScoped<IEmailService, EmailService>();
 }
