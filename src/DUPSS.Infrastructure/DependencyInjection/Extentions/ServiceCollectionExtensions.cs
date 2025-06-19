@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
 	public static IServiceCollection AddIdentityService(this IServiceCollection services)
 	{
 		// Add Identity
-		services.AddIdentity<AppUser, IdentityRole>(options =>
+		services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
 		{
 			// User settings
 			options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";

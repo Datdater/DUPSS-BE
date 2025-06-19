@@ -2,7 +2,6 @@
 using DUPSS.Application.Abtractions;
 using DUPSS.Application.Behaviors;
 using DUPSS.Application.Services;
-using DUPSS.Application.Services.RoleSeeder;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
