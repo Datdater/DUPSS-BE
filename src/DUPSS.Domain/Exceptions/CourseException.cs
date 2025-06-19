@@ -10,7 +10,7 @@ namespace DUPSS.Domain.Exceptions
     {
         public class CourseNotFoundException : NotFoundException
         {
-            public CourseNotFoundException(Guid courseId)
+            public CourseNotFoundException(string courseId)
                 : base($"Course with ID '{courseId}' not found.")
             {
             }
