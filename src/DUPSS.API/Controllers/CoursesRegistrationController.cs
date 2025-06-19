@@ -4,45 +4,49 @@ using DUPSS.Application.Features.CourseRegistrations.Queries.GetAllCourseRegistr
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace DUPSS.API.Controllers
+namespace DUPSS.API.Controllers;
+
+public class CoursesRegistrationController(IMediator mediator) : BaseAPIController
 {
-    public class CoursesRegistrationController(IMediator mediator) : BaseAPIController
+    [HttpPost]
+    public async Task<IActionResult> RegisterCourse(
+        [FromBody] CreateCourseRegistrationCommand command
+    )
     {
-        [HttpPost]
-        public async Task<IActionResult> RegisterCourse([FromBody] CreateCourseRegistrationCommand command)
+        var result = await mediator.Send(command);
+        if (result.IsSuccess)
         {
-            var result = await mediator.Send(command);
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Error);
+            return Ok(result);
         }
+        return BadRequest(result.Error);
+    }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCourseRegistration(string id, [FromBody] UpdateCourseRegistrationCommand command)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateCourseRegistration(
+        string id,
+        [FromBody] UpdateCourseRegistrationCommand command
+    )
+    {
+        if (id != command.Id)
         {
-            if (id != command.Id)
-            {
-                return BadRequest("Registration ID mismatch.");
-            }
-            var result = await mediator.Send(command);
-            if (result.IsSuccess)
-            {
-                return Ok(result);
-            }
-            return BadRequest(result.Error);
+            return BadRequest("Registration ID mismatch.");
         }
+        var result = await mediator.Send(command);
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
+        return BadRequest(result.Error);
+    }
 
-        [HttpGet]
-        public async Task<IActionResult> GetCourseRegistrationById(GetAllCourseRegistrationQuery query)
+    [HttpGet]
+    public async Task<IActionResult> GetCourseRegistrationById(GetAllCourseRegistrationQuery query)
+    {
+        var result = await mediator.Send(query);
+        if (result.IsSuccess)
         {
-            var result = await mediator.Send(query);
-            if (result.IsSuccess)
-            {
-                return Ok(result.Value);
-            }
-            return BadRequest(result.Error);
+            return Ok(result.Value);
         }
+        return BadRequest(result.Error);
     }
 }
