@@ -12,5 +12,7 @@ namespace DUPSS.Domain.Entities
         public string? LastModifiedBy { get; set; }
 
         public Test? Test { get; set; }
+
+        public ICollection<QuestionOption> QuestionOptions { get; set; } = new List<QuestionOption>();
     }
 }

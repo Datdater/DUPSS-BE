@@ -17,4 +17,8 @@
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.6.2" />
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Features\TestQuestions\Queries\GetQuestionOptionTestResultById\" />
+	  <Folder Include="Features\TestQuestions\Queries\GetAllQuestionOptionTestResult\" />
+	</ItemGroup>
 </Project>

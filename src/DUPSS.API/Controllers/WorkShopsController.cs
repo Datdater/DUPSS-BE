@@ -10,7 +10,7 @@ namespace DUPSS.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WorkShopsController(IMediator mediator) : ControllerBase
+    public class WorkShopsController(IMediator mediator) : BaseAPIController
     {
         [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] GetAllWorkshopsQuery query)
