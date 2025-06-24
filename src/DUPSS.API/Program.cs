@@ -1,6 +1,7 @@
 
 using DUPSS.API.Middlewares;
 using DUPSS.Application.DependencyInjection.Extentions;
+using DUPSS.Application.Mapper;
 using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;

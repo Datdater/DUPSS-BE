@@ -2,10 +2,11 @@
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace DUPSS.Application.Features.Tests.Queries.GetAll
 {
-    public class GetAllTestsQuery : IQuery<PagedResult<GetAllTestsResponse>>
+    public record GetAllTestsQuery : IQuery<PagedResult<GetAllTestsResponse>>
     {
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
@@ -20,6 +21,6 @@ namespace DUPSS.Application.Features.Tests.Queries.GetAll
         public string? SortOrder { get; set; }
 
         // key: TestCategory
-        public Dictionary<string, string>? Filters { get; set; }
+        public Dictionary<string, string> Filters { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
     }
 }

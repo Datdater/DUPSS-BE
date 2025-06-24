@@ -10,6 +10,7 @@ namespace DUPSS.Application.Models.Tests
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = default!;
+        public string SurveyType { get; set; } = default!;
         public string? WorkshopTitle { get; set; }
         public string Category { get; set; } = default!;
     }
