@@ -1,6 +1,7 @@
 ﻿using DUPSS.Application.Models.TestQuestions;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
+using DUPSS.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,12 @@ namespace DUPSS.Application.Features.TestQuestions.Queries.GetAllTestResult
         public string? SortBy { get; set; } // TakenAt
         public string? SortOrder { get; set; } // asc / desc
 
-        public Dictionary<string, string>? Filters { get; set; }
+        // Thay vì Filters
+        public String? UserId { get; set; }
+        public String? TestId { get; set; }
+        public SurveyType? SurveyType { get; set; }
+        public TestCategory? Category { get; set; }
+        public SeverityLevel? SeverityLevel { get; set; }
     }
+
 }

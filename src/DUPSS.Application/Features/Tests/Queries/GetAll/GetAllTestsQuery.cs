@@ -1,6 +1,7 @@
 ﻿using DUPSS.Application.Models.Tests;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
+using DUPSS.Domain.Enums;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
@@ -21,6 +22,7 @@ namespace DUPSS.Application.Features.Tests.Queries.GetAll
         public string? SortOrder { get; set; }
 
         // key: TestCategory
-        public Dictionary<string, string> Filters { get; set; } = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public TestCategory? Category { get; set; }
     }
 }

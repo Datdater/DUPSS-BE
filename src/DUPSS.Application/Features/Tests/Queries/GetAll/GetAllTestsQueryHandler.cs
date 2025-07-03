@@ -29,21 +29,10 @@ namespace DUPSS.Application.Features.Tests.Queries.GetAll
                     (t.Workshop != null && t.Workshop.Title.ToLower().Contains(search)));
             }
 
-            // Filter theo TestCategory
-            if (request.Filters != null)
+            // Filter theo Category (nếu có)
+            if (request.Category.HasValue)
             {
-                foreach (var filter in request.Filters)
-                {
-                    switch (filter.Key.ToLower())
-                    {
-                        case "testcategory":
-                            if (Enum.TryParse<TestCategory>(filter.Value, true, out var category))
-                            {
-                                queryable = queryable.Where(t => t.Category == category);
-                            }
-                            break;
-                    }
-                }
+                queryable = queryable.Where(t => t.Category == request.Category.Value);
             }
 
             // Sort theo Workshop.StartDate hoặc EndDate

@@ -30,39 +30,31 @@ namespace DUPSS.Application.Features.TestQuestions.Queries.GetAllTestResult
             }
 
             // Filters
-            if (request.Filters != null)
+            if (!string.IsNullOrWhiteSpace(request.UserId))
             {
-                foreach (var filter in request.Filters)
-                {
-                    switch (filter.Key.ToLower())
-                    {
-                        case "userid":
-                            queryable = queryable.Where(tr => tr.UserId == filter.Value);
-                            break;
-                        case "testid":
-                            queryable = queryable.Where(tr => tr.TestId == filter.Value);
-                            break;
-                        case "surveytype":
-                            if (Enum.TryParse<SurveyType>(filter.Value, true, out var surveyType))
-                            {
-                                queryable = queryable.Where(tr => tr.Test.SurveyType == surveyType);
-                            }
-                            break;
-                        case "category":
-                            if (Enum.TryParse<TestCategory>(filter.Value, true, out var category))
-                            {
-                                queryable = queryable.Where(tr => tr.Test.Category == category);
-                            }
-                            break;
-                        case "severitylevel":
-                            if (Enum.TryParse<SeverityLevel>(filter.Value, true, out var severity))
-                            {
-                                queryable = queryable.Where(tr => tr.SeverityLevel == severity);
-                            }
-                            break;
-                    }
-                }
+                queryable = queryable.Where(tr => tr.UserId == request.UserId);
             }
+
+            if (!string.IsNullOrWhiteSpace(request.TestId))
+            {
+                queryable = queryable.Where(tr => tr.TestId == request.TestId);
+            }
+
+            if (request.SurveyType.HasValue)
+            {
+                queryable = queryable.Where(tr => tr.Test.SurveyType == request.SurveyType.Value);
+            }
+
+            if (request.Category.HasValue)
+            {
+                queryable = queryable.Where(tr => tr.Test.Category == request.Category.Value);
+            }
+
+            if (request.SeverityLevel.HasValue)
+            {
+                queryable = queryable.Where(tr => tr.SeverityLevel == request.SeverityLevel.Value);
+            }
+
 
             // Sort
             var sortBy = request.SortBy?.ToLower();

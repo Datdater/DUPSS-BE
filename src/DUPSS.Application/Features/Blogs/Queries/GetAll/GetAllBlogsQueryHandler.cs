@@ -24,22 +24,17 @@ namespace DUPSS.Application.Features.Blogs.Queries.GetAll
                     (b.Content != null && b.Content.Contains(request.Search)));
             }
 
-            //Filter
-            if (request.Filters != null)
+            // Filter
+            if (!string.IsNullOrWhiteSpace(request.AuthorId))
             {
-                foreach (var filter in request.Filters)
-                {
-                    switch (filter.Key.ToLower())
-                    {
-                        case "authorid":
-                            queryable = queryable.Where(b => b.AuthorId == filter.Value);
-                            break;
-                        case "title":
-                            queryable = queryable.Where(b => b.Title.Contains(filter.Value));
-                            break;
-                    }
-                }
+                queryable = queryable.Where(b => b.AuthorId == request.AuthorId);
             }
+
+            if (!string.IsNullOrWhiteSpace(request.Title))
+            {
+                queryable = queryable.Where(b => b.Title.Contains(request.Title));
+            }
+
 
             //Sort
             var sortBy = request.SortBy?.ToLower();

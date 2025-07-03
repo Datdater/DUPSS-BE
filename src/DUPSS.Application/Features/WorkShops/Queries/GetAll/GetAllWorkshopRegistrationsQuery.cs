@@ -10,12 +10,13 @@ using System.Threading.Tasks;
 namespace DUPSS.Application.Features.WorkShops.Queries.GetAll
 {
     public record GetAllWorkshopRegistrationsQuery(
-         int PageIndex = 1,
-         int PageSize = 10,
-         string? Search = null,
-         Dictionary<string, string>? Filters = null,
-         string? SortBy = null,
-         string? SortOrder = null
-    ) : IQuery<PagedResult<GetAllWorkshopRegistrationsResponse>>;
+     int PageIndex = 1,
+     int PageSize = 10,
+     string? Search = null,
+     string? WorkshopId = null,
+     string? UserId = null, 
+     string? SortBy = null,
+     string? SortOrder = null
+) : IQuery<PagedResult<GetAllWorkshopRegistrationsResponse>>;
 
 }
