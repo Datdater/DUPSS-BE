@@ -1,9 +1,10 @@
-using AutoMapper;
+﻿using AutoMapper;
 using DUPSS.Application.Models.Blogs;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
 using DUPSS.Domain.Entities;
 using DUPSS.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace DUPSS.Application.Features.Blogs.Queries.GetAll
 {
@@ -13,9 +14,12 @@ namespace DUPSS.Application.Features.Blogs.Queries.GetAll
         public async Task<Result<PagedResult<GetAllBlogsResponse>>> Handle(
             GetAllBlogsQuery request, CancellationToken cancellationToken)
         {
-            var queryable = unitOfWork.Repository<Blog>().GetQueryable();
+            // Bắt đầu query
+            IQueryable<Blog> queryable = unitOfWork.Repository<Blog>()
+                .GetQueryable()
+                .Include(b => b.User);
 
-            //Search
+            // Search
             if (!string.IsNullOrWhiteSpace(request.Search))
             {
                 queryable = queryable.Where(b =>
@@ -35,27 +39,43 @@ namespace DUPSS.Application.Features.Blogs.Queries.GetAll
                 queryable = queryable.Where(b => b.Title.Contains(request.Title));
             }
 
-
-            //Sort
+            // Sort
             var sortBy = request.SortBy?.ToLower();
             var sortOrder = request.SortOrder?.ToLower() == "desc" ? false : true;
 
             queryable = sortBy switch
             {
-                "title" => sortOrder ? queryable.OrderBy(b => b.Title) : queryable.OrderByDescending(b => b.Title),
-                "createdat" => sortOrder ? queryable.OrderBy(b => b.CreatedAt) : queryable.OrderByDescending(b => b.CreatedAt),
-                "authorid" => sortOrder ? queryable.OrderBy(b => b.AuthorId) : queryable.OrderByDescending(b => b.AuthorId),
-                _ => queryable.OrderByDescending(b => b.CreatedAt) // default
+                "title" => sortOrder
+                    ? queryable.OrderBy(b => b.Title)
+                    : queryable.OrderByDescending(b => b.Title),
+
+                "createdat" => sortOrder
+                    ? queryable.OrderBy(b => b.CreatedAt)
+                    : queryable.OrderByDescending(b => b.CreatedAt),
+
+                "authorid" => sortOrder
+                    ? queryable.OrderBy(b => b.AuthorId)
+                    : queryable.OrderByDescending(b => b.AuthorId),
+
+                _ => queryable.OrderByDescending(b => b.CreatedAt)
             };
 
-            // Paging
+            // Phân trang
             var pagedBlogs = await PagedResult<Blog>.CreateAsync(
                 queryable,
                 request.PageIndex,
                 request.PageSize
             );
 
-            var response = mapper.Map<PagedResult<GetAllBlogsResponse>>(pagedBlogs);
+            var mappedItems = mapper.Map<List<GetAllBlogsResponse>>(pagedBlogs.Items);
+
+            var response = new PagedResult<GetAllBlogsResponse>(
+                mappedItems,
+                pagedBlogs.PageIndex,
+                pagedBlogs.PageSize,
+                pagedBlogs.TotalCount
+            );
+
             return Result.Success(response);
         }
     }

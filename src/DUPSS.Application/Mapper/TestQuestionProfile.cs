@@ -12,7 +12,10 @@ namespace DUPSS.Application.Mapper
             CreateMap<TestQuestionRequest, TestQuestion>();
             CreateMap<QuestionOptionRequest, QuestionOption>();
 
-            CreateMap<TestQuestion, GetTestQuestionWithOptionsResponse>();
+            CreateMap<TestQuestion, GetTestQuestionWithOptionsResponse>()
+             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.ToString()))
+             .ForMember(dest => dest.Options, opt => opt.MapFrom(src => src.QuestionOptions));
+
 
             CreateMap<QuestionOption, QuestionOptionResponse>();
 
