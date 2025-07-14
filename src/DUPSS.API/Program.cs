@@ -1,68 +1,61 @@
 using DUPSS.API.Middlewares;
+using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
-using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-namespace DUPSS.API;
-
-public class Program
+namespace DUPSS.API
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-        var configuration = builder.Configuration;
-        var serviceCollection = builder.Services;
-        serviceCollection
-            .AddSwaggerGenNewtonsoftSupport()
-            .AddFluentValidationRulesToSwagger()
-            .AddEndpointsApiExplorer()
-            .AddSwagger();
-        serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
+        public static void Main(string[] args)
+        {
+            var builder = WebApplication.CreateBuilder(args);
+            var configuration = builder.Configuration;
+            var serviceCollection = builder.Services;
+            serviceCollection
+                .AddSwaggerGenNewtonsoftSupport()
+                .AddFluentValidationRulesToSwagger()
+                .AddEndpointsApiExplorer()
+                .AddSwagger();
+            serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
-        // MediatR
-        serviceCollection.AddConfigureMediatR();
+            builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
-        // AutoMapper
-        serviceCollection.AddConfigureAutoMapper();
+            // MediatR
+            serviceCollection.AddConfigureMediatR();
 
-        // CollectionServices
-        serviceCollection.AddPersistenceService(configuration);
+            // AutoMapper
+            serviceCollection.AddConfigureAutoMapper();
 
-        // Add services to the container.
-        builder.Services.AddDbContext<DUPSSContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("default"))
-        );
-        // Add Identity
-        builder
-            .Services.AddIdentity<AppUser, IdentityRole>(options =>
-            {
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-                options.Lockout.MaxFailedAccessAttempts = 5;
+            // Services
+            serviceCollection.AddConfigureServiceCollection();
 
-                // User settings
-                options.User.RequireUniqueEmail = true;
-            })
-            .AddEntityFrameworkStores<DUPSSContext>()
-            .AddDefaultTokenProviders();
-        builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
+            // CollectionServices
+            serviceCollection.AddPersistenceService(configuration);
+            //Identity
+            builder.Services.AddIdentityService();
+            //Authentication
+            builder.Services.AddAuthenticationAuthorizationService(configuration);
 
-        var app = builder.Build();
+            builder.Services.AddControllers();
+            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            builder.Services.AddOpenApi();
 
-        app.UseSwaggerConfig();
+            var app = builder.Build();
 
-        app.UseHttpsRedirection();
+            app.UseSwaggerConfig();
 
-        app.UseAuthorization();
+            app.UseHttpsRedirection();
 
-        app.MapControllers();
+            app.UseAuthentication();
 
-        app.Run();
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
+        }
     }
 }
