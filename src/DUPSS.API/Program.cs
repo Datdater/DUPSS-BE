@@ -4,6 +4,7 @@ using DUPSS.Application.DependencyInjection.Extentions;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Newtonsoft.Json.Converters;
 
 namespace DUPSS.API
 {
@@ -22,6 +23,14 @@ namespace DUPSS.API
             serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
             builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
+            //EnumConverter
+            builder
+                .Services.AddControllers()
+                .AddNewtonsoftJson(opts =>
+                {
+                    opts.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
 
             // MediatR
             serviceCollection.AddConfigureMediatR();

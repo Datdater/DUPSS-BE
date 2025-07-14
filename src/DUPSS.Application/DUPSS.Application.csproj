@@ -25,4 +25,8 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Features\Bookings\Queries\" />
+	  <Folder Include="Utils\NewFolder\" />
+	</ItemGroup>
 </Project>
