@@ -16,18 +16,14 @@ namespace DUPSS.API.Controllers
         public async Task<IActionResult> GetAllTestResults([FromQuery] GetAllTestResultQuery query)
         {
             var result = await mediator.Send(query);
-            if (result.IsSuccess)
-                return Ok(result.Value);
-            return BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateTestQuestions([FromBody] CreateTestQuestionCommand command)
         {
             var result = await mediator.Send(command);
-            if (result.IsSuccess)
-                return Ok();
-            return BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
@@ -35,9 +31,7 @@ namespace DUPSS.API.Controllers
         {
             command.Id = id;
             var result = await mediator.Send(command);
-            if (result.IsSuccess)
-                return NoContent();
-            return BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpGet("option-results/{testResultsId}")]
@@ -45,18 +39,14 @@ namespace DUPSS.API.Controllers
         {
             var query = new GetQuestionOptionTestResultByIdQuery { TestResultsId = testResultsId };
             var result = await mediator.Send(query);
-            if (result.IsSuccess)
-                return Ok(result.Value);
-            return NotFound(result.Error);
+            return Ok(result);
         }
 
         [HttpPost("option-results")]
         public async Task<IActionResult> CreateQuestionOptionTestResults([FromBody] CreateQuestionOptionTestResultCommand command)
         {
             var result = await mediator.Send(command);
-            if (result.IsSuccess)
-                return Ok();
-            return BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpGet("{testId}")]
@@ -64,9 +54,7 @@ namespace DUPSS.API.Controllers
         {
             var query = new GetByTestIdQuery { TestId = testId };
             var result = await mediator.Send(query);
-            if (result.IsSuccess)
-                return Ok(result.Value);
-            return NotFound(result.Error);
+            return Ok(result);
         }
     }
 }
