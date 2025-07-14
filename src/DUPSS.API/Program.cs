@@ -5,6 +5,8 @@ using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 
 public class Program
