@@ -1,6 +1,5 @@
 ﻿using DUPSS.Domain.Entities;
 using DUPSS.Domain.Enums;
-using DUPSS.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -39,34 +38,35 @@ namespace DUPSS.Infrastructure.DbContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //// Configure the Tracking -> Step relationship to prevent cascade delete
-            builder.Entity<Tracking>(entiy =>
-                entiy.HasOne(t => t.Step).WithMany().OnDelete(DeleteBehavior.NoAction) // Prevent cascade delete for Tracking -> Step relationship
+
+            // Configure the Tracking -> Step relationship to prevent cascade delete
+            builder.Entity<Tracking>(entity =>
+                entity.HasOne(t => t.Step)
+                    .WithMany()
+                    .OnDelete(DeleteBehavior.NoAction)
             );
 
             // Configure the CourseRegistration -> Tracking relationship
-            builder
-                .Entity<CourseRegistration>()
+            builder.Entity<CourseRegistration>()
                 .HasMany(cr => cr.Trackings)
                 .WithOne(x => x.CourseRegistration)
                 .OnDelete(DeleteBehavior.Cascade);
 
             // Configure Comment self-referencing relationship
-            builder
-                .Entity<Comment>()
+            builder.Entity<Comment>()
                 .HasOne(c => c.ParentComment)
                 .WithMany(c => c.Replies)
                 .HasForeignKey(c => c.ParentCommentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            // Configure Test enum conversion
             builder.Entity<Test>()
                 .Property(e => e.SurveyType)
                 .HasConversion(new EnumToStringConverter<SurveyType>())
                 .HasColumnType("nvarchar(20)");
-                }
 
-            builder
-                .Entity<BookingRequest>()
+
+            builder.Entity<BookingRequest>()
                 .Property(a => a.Status)
                 .HasConversion(
                     aS => aS.ToString(),

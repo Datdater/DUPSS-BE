@@ -1,7 +1,6 @@
 ﻿using System;
 using DUPSS.Domain.Commons;
 
-namespace DUPSS.Domain.Entities;
 
 namespace DUPSS.Domain.Entities
 {
