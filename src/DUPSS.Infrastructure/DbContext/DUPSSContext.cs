@@ -1,6 +1,8 @@
 ﻿using DUPSS.Domain.Entities;
+using DUPSS.Domain.Enums;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DUPSS.Infrastructure.DbContext;
 
@@ -47,12 +49,17 @@ public class DUPSSContext : IdentityDbContext<AppUser>
             .WithOne(x => x.CourseRegistration)
             .OnDelete(DeleteBehavior.Cascade);
 
-        // Configure Comment self-referencing relationship
-        builder
-            .Entity<Comment>()
-            .HasOne(c => c.ParentComment)
-            .WithMany(c => c.Replies)
-            .HasForeignKey(c => c.ParentCommentId)
-            .OnDelete(DeleteBehavior.NoAction);
+            // Configure Comment self-referencing relationship
+            builder.Entity<Comment>()
+                .HasOne(c => c.ParentComment)
+                .WithMany(c => c.Replies)
+                .HasForeignKey(c => c.ParentCommentId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Entity<Test>()
+                .Property(e => e.SurveyType)
+                .HasConversion(new EnumToStringConverter<SurveyType>())
+                .HasColumnType("nvarchar(20)");
+                }
     }
 }

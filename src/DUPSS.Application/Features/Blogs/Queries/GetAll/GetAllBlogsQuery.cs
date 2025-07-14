@@ -10,16 +10,16 @@ namespace DUPSS.Application.Features.Blogs.Queries.GetAll
         public int PageIndex { get; set; }
         public int PageSize { get; set; }
 
-        // Title, Content, Description
+        // Search chung cho Title, Description, Content
         public string? Search { get; set; }
 
-        // Title, CreatedAt, AuthorId
+        // Sort fields
         public string? SortBy { get; set; }
-
-        // "asc" or "desc"
         public string? SortOrder { get; set; }
 
-        // AuthorId, Title
-        public Dictionary<string, string>? Filters { get; set; }
+        // Thay cho Dictionary
+        public string? AuthorId { get; set; }
+        public string? Title { get; set; }
     }
+
 }

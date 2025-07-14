@@ -12,11 +12,17 @@ namespace DUPSS.Application.Mapper
         public BlogProfile()
         {
      
-            CreateMap<Blog, GetAllBlogsResponse>();
-            CreateMap<Blog, GetBlogResponse>();
+            CreateMap<Blog, GetAllBlogsResponse>()
+                    .ForMember(dest => dest.AuthorName, opt =>
+                    opt.MapFrom(src => src.User != null ? $"{src.User.FirstName} {src.User.LastName}" : string.Empty));
+            CreateMap<Blog, GetBlogResponse>()
+                    .ForMember(dest => dest.AuthorName, opt =>
+                    opt.MapFrom(src => src.User != null ? $"{src.User.FirstName} {src.User.LastName}" : string.Empty));
 
 
             CreateMap<PagedResult<Blog>, PagedResult<GetAllBlogsResponse>>();
+               
+
 
 
             CreateMap<CreateBlogCommand, Blog>();
