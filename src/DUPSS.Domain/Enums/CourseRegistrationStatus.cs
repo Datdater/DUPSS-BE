@@ -1,16 +1,14 @@
-﻿
-namespace DUPSS.Domain.Enums
+﻿namespace DUPSS.Domain.Enums;
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum CourseRegistrationStatus
 {
-    [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum CourseRegistrationStatus
-    {
-        [EnumMember(Value = "Purchased")]
-        Purchased,
+    [EnumMember(Value = "Purchased")]
+    Purchased,
 
-        [EnumMember(Value = "Completed")]
-        Completed,
+    [EnumMember(Value = "Completed")]
+    Completed,
 
-        [EnumMember(Value = "InProgress")]
-        InProgress,
-    }
+    [EnumMember(Value = "InProgress")]
+    InProgress,
 }

@@ -1,6 +1,6 @@
 ﻿using DUPSS.API.Middlewares;
+using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
-using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
@@ -15,7 +15,7 @@ public class Program
         var configuration = builder.Configuration;
         var serviceCollection = builder.Services;
 
-        // Thêm CORS
+        // Th�m CORS
         serviceCollection.AddCors(options =>
         {
             options.AddPolicy("AllowFrontend", policy =>

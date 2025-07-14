@@ -4,16 +4,18 @@ using DUPSS.Domain.Enums;
 
 public class BookingRequest : BaseEntity
 {
-    public string BookingCode { get; set; }
-    public string BookingFeedback { get; set; }
-    public string CancelReason { get; set; }
-    [Required]
-    public string UrlMeeting { get; set; }
+    public DateTime BookingDate { get; set; }
+    public string? BookingNote { get; set; }
+    public required string BookingCode { get; set; }
+    public string? BookingFeedback { get; set; }
+    public string? CancelReason { get; set; }
+
+    public string? UrlMeeting { get; set; }
 
     public BookingStatus Status { get; set; }
 
     [ForeignKey("User")]
-    public string UserId { get; set; }
+    public required string UserId { get; set; }
     public AppUser? User { get; set; }
 
     [ForeignKey("Staff")]

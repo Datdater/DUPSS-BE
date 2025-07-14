@@ -16,14 +16,23 @@ namespace DUPSS.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Name = table.Column<string>(
+                        type: "nvarchar(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
+                    NormalizedName = table.Column<string>(
+                        type: "nvarchar(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -35,10 +44,26 @@ namespace DUPSS.Infrastructure.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     Gender = table.Column<bool>(type: "bit", nullable: false),
                     BirthDay = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(
+                        type: "nvarchar(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
+                    NormalizedUserName = table.Column<string>(
+                        type: "nvarchar(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
+                    Email = table.Column<string>(
+                        type: "nvarchar(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
+                    NormalizedEmail = table.Column<string>(
+                        type: "nvarchar(256)",
+                        maxLength: 256,
+                        nullable: true
+                    ),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -46,14 +71,18 @@ namespace DUPSS.Infrastructure.Migrations
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnd = table.Column<DateTimeOffset>(
+                        type: "datetimeoffset",
+                        nullable: true
+                    ),
                     LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Categories",
@@ -63,12 +92,13 @@ namespace DUPSS.Infrastructure.Migrations
                     CateName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CateDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "QueuingCourses",
@@ -86,12 +116,13 @@ namespace DUPSS.Infrastructure.Migrations
                     TotalStep = table.Column<int>(type: "int", nullable: false),
                     QueuingCourseStatus = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QueuingCourses", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Tests",
@@ -101,12 +132,13 @@ namespace DUPSS.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Category = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tests", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Workshops",
@@ -121,22 +153,24 @@ namespace DUPSS.Infrastructure.Migrations
                     Host = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Workshops", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -146,18 +180,21 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table
+                        .Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -167,8 +204,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
@@ -176,26 +215,34 @@ namespace DUPSS.Infrastructure.Migrations
                 {
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    ProviderDisplayName = table.Column<string>(
+                        type: "nvarchar(max)",
+                        nullable: true
+                    ),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                    table.PrimaryKey(
+                        "PK_AspNetUserLogins",
+                        x => new { x.LoginProvider, x.ProviderKey }
+                    );
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -205,14 +252,17 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
@@ -221,18 +271,28 @@ namespace DUPSS.Infrastructure.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
+                    table.PrimaryKey(
+                        "PK_AspNetUserTokens",
+                        x => new
+                        {
+                            x.UserId,
+                            x.LoginProvider,
+                            x.Name,
+                        }
+                    );
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Blogs",
@@ -245,7 +305,7 @@ namespace DUPSS.Infrastructure.Migrations
                     AuthorId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -254,8 +314,10 @@ namespace DUPSS.Infrastructure.Migrations
                         name: "FK_Blogs_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "BookingRequests",
@@ -270,7 +332,7 @@ namespace DUPSS.Infrastructure.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StaffId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -279,14 +341,17 @@ namespace DUPSS.Infrastructure.Migrations
                         name: "FK_BookingRequests_AspNetUsers_StaffId",
                         column: x => x.StaffId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_BookingRequests_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Notifications",
@@ -299,7 +364,7 @@ namespace DUPSS.Infrastructure.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     FromUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -308,14 +373,17 @@ namespace DUPSS.Infrastructure.Migrations
                         name: "FK_Notifications_AspNetUsers_FromUserId",
                         column: x => x.FromUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Notifications_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Courses",
@@ -337,7 +405,7 @@ namespace DUPSS.Infrastructure.Migrations
                     CategoryId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -346,13 +414,16 @@ namespace DUPSS.Infrastructure.Migrations
                         name: "FK_Courses_AspNetUsers_CreatedBy",
                         column: x => x.CreatedBy,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Courses_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "QueuingCourseSection",
@@ -364,7 +435,7 @@ namespace DUPSS.Infrastructure.Migrations
                     TotalStep = table.Column<int>(type: "int", nullable: true),
                     QueuingCoureseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -374,8 +445,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.QueuingCoureseId,
                         principalTable: "QueuingCourses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Reasons",
@@ -385,7 +458,7 @@ namespace DUPSS.Infrastructure.Migrations
                     Detail = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     QueuingCoureseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -395,8 +468,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.QueuingCoureseId,
                         principalTable: "QueuingCourses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "TestQuestions",
@@ -409,7 +484,7 @@ namespace DUPSS.Infrastructure.Migrations
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LastModifiedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -419,8 +494,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.TestId,
                         principalTable: "Tests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "TestRecommendations",
@@ -433,7 +510,7 @@ namespace DUPSS.Infrastructure.Migrations
                     Recommend = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TestId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -443,8 +520,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.TestId,
                         principalTable: "Tests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "TestResults",
@@ -458,7 +537,7 @@ namespace DUPSS.Infrastructure.Migrations
                     TotalPoint = table.Column<double>(type: "float", nullable: true),
                     Recommendation = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -468,14 +547,17 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_TestResults_Tests_TestId",
                         column: x => x.TestId,
                         principalTable: "Tests",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "WorkshopRegistrations",
@@ -486,7 +568,7 @@ namespace DUPSS.Infrastructure.Migrations
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -496,14 +578,17 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_WorkshopRegistrations_Workshops_WorkshopId",
                         column: x => x.WorkshopId,
                         principalTable: "Workshops",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "CourseRegistrations",
@@ -518,7 +603,7 @@ namespace DUPSS.Infrastructure.Migrations
                     Status = table.Column<int>(type: "int", nullable: false),
                     CertificateFile = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -528,14 +613,17 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.StudentId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_CourseRegistrations_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "CourseSections",
@@ -548,7 +636,7 @@ namespace DUPSS.Infrastructure.Migrations
                     CourseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -558,8 +646,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Feedbacks",
@@ -572,7 +662,7 @@ namespace DUPSS.Infrastructure.Migrations
                     CourseId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -582,8 +672,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "QueuingSteps",
@@ -597,10 +689,14 @@ namespace DUPSS.Infrastructure.Migrations
                     CourseSectionId = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: true),
                     Type = table.Column<bool>(type: "bit", nullable: false),
-                    VideoURL = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    VideoURL = table.Column<string>(
+                        type: "nvarchar(500)",
+                        maxLength: 500,
+                        nullable: true
+                    ),
                     QueuingCoureseId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -609,8 +705,10 @@ namespace DUPSS.Infrastructure.Migrations
                         name: "FK_QueuingSteps_QueuingCourseSection_QueuingCoureseId",
                         column: x => x.QueuingCoureseId,
                         principalTable: "QueuingCourseSection",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "QuestionOptions",
@@ -621,7 +719,7 @@ namespace DUPSS.Infrastructure.Migrations
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Value = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -631,8 +729,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.QuestionId,
                         principalTable: "TestQuestions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Steps",
@@ -643,13 +743,17 @@ namespace DUPSS.Infrastructure.Migrations
                     StepSummary = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
-                    Attachment = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    Attachment = table.Column<string>(
+                        type: "nvarchar(500)",
+                        maxLength: 500,
+                        nullable: true
+                    ),
                     CourseSectionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Duration = table.Column<int>(type: "int", nullable: true),
                     Type = table.Column<bool>(type: "bit", nullable: false),
                     VideoURL = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -659,8 +763,10 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.CourseSectionId,
                         principalTable: "CourseSections",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "QuestionOptionTestResults",
@@ -671,7 +777,7 @@ namespace DUPSS.Infrastructure.Migrations
                     SelectedOptionId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     TestResultId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -681,13 +787,16 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.SelectedOptionId,
                         principalTable: "QuestionOptions",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_QuestionOptionTestResults_TestResults_TestResultId",
                         column: x => x.TestResultId,
                         principalTable: "TestResults",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Comments",
@@ -700,7 +809,7 @@ namespace DUPSS.Infrastructure.Migrations
                     CommentDetail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -709,14 +818,17 @@ namespace DUPSS.Infrastructure.Migrations
                         name: "FK_Comments_Comments_ParentCommentId",
                         column: x => x.ParentCommentId,
                         principalTable: "Comments",
-                        principalColumn: "Id");
+                        principalColumn: "Id"
+                    );
                     table.ForeignKey(
                         name: "FK_Comments_Steps_StepId",
                         column: x => x.StepId,
                         principalTable: "Steps",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "Trackings",
@@ -726,7 +838,7 @@ namespace DUPSS.Infrastructure.Migrations
                     EnrollmentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     StepId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -736,286 +848,290 @@ namespace DUPSS.Infrastructure.Migrations
                         column: x => x.EnrollmentId,
                         principalTable: "CourseRegistrations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "FK_Trackings_Steps_StepId",
                         column: x => x.StepId,
                         principalTable: "Steps",
-                        principalColumn: "Id");
-                });
+                        principalColumn: "Id"
+                    );
+                }
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
-                column: "RoleId");
+                column: "RoleId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
+                filter: "[NormalizedName] IS NOT NULL"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
                 table: "AspNetUserClaims",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
                 table: "AspNetUserLogins",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
                 table: "AspNetUserRoles",
-                column: "RoleId");
+                column: "RoleId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
                 table: "AspNetUsers",
-                column: "NormalizedEmail");
+                column: "NormalizedEmail"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true,
-                filter: "[NormalizedUserName] IS NOT NULL");
+                filter: "[NormalizedUserName] IS NOT NULL"
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Blogs_UserId",
-                table: "Blogs",
-                column: "UserId");
+            migrationBuilder.CreateIndex(name: "IX_Blogs_UserId", table: "Blogs", column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookingRequests_StaffId",
                 table: "BookingRequests",
-                column: "StaffId");
+                column: "StaffId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_BookingRequests_UserId",
                 table: "BookingRequests",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_ParentCommentId",
                 table: "Comments",
-                column: "ParentCommentId");
+                column: "ParentCommentId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_StepId",
                 table: "Comments",
-                column: "StepId");
+                column: "StepId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseRegistrations_CourseId",
                 table: "CourseRegistrations",
-                column: "CourseId");
+                column: "CourseId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseRegistrations_StudentId",
                 table: "CourseRegistrations",
-                column: "StudentId");
+                column: "StudentId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_CategoryId",
                 table: "Courses",
-                column: "CategoryId");
+                column: "CategoryId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Courses_CreatedBy",
                 table: "Courses",
-                column: "CreatedBy");
+                column: "CreatedBy"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseSections_CourseId",
                 table: "CourseSections",
-                column: "CourseId");
+                column: "CourseId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Feedbacks_CourseId",
                 table: "Feedbacks",
-                column: "CourseId");
+                column: "CourseId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_FromUserId",
                 table: "Notifications",
-                column: "FromUserId");
+                column: "FromUserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Notifications_UserId",
                 table: "Notifications",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionOptions_QuestionId",
                 table: "QuestionOptions",
-                column: "QuestionId");
+                column: "QuestionId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionOptionTestResults_SelectedOptionId",
                 table: "QuestionOptionTestResults",
-                column: "SelectedOptionId");
+                column: "SelectedOptionId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_QuestionOptionTestResults_TestResultId",
                 table: "QuestionOptionTestResults",
-                column: "TestResultId");
+                column: "TestResultId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_QueuingCourseSection_QueuingCoureseId",
                 table: "QueuingCourseSection",
-                column: "QueuingCoureseId");
+                column: "QueuingCoureseId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_QueuingSteps_QueuingCoureseId",
                 table: "QueuingSteps",
-                column: "QueuingCoureseId");
+                column: "QueuingCoureseId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reasons_QueuingCoureseId",
                 table: "Reasons",
-                column: "QueuingCoureseId");
+                column: "QueuingCoureseId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Steps_CourseSectionId",
                 table: "Steps",
-                column: "CourseSectionId");
+                column: "CourseSectionId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestQuestions_TestId",
                 table: "TestQuestions",
-                column: "TestId");
+                column: "TestId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestRecommendations_TestId",
                 table: "TestRecommendations",
-                column: "TestId");
+                column: "TestId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestResults_TestId",
                 table: "TestResults",
-                column: "TestId");
+                column: "TestId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_TestResults_UserId",
                 table: "TestResults",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trackings_EnrollmentId",
                 table: "Trackings",
-                column: "EnrollmentId");
+                column: "EnrollmentId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trackings_StepId",
                 table: "Trackings",
-                column: "StepId");
+                column: "StepId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkshopRegistrations_UserId",
                 table: "WorkshopRegistrations",
-                column: "UserId");
+                column: "UserId"
+            );
 
             migrationBuilder.CreateIndex(
                 name: "IX_WorkshopRegistrations_WorkshopId",
                 table: "WorkshopRegistrations",
-                column: "WorkshopId");
+                column: "WorkshopId"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+            migrationBuilder.DropTable(name: "AspNetRoleClaims");
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+            migrationBuilder.DropTable(name: "AspNetUserClaims");
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+            migrationBuilder.DropTable(name: "AspNetUserLogins");
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+            migrationBuilder.DropTable(name: "AspNetUserRoles");
 
-            migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+            migrationBuilder.DropTable(name: "AspNetUserTokens");
 
-            migrationBuilder.DropTable(
-                name: "Blogs");
+            migrationBuilder.DropTable(name: "Blogs");
 
-            migrationBuilder.DropTable(
-                name: "BookingRequests");
+            migrationBuilder.DropTable(name: "BookingRequests");
 
-            migrationBuilder.DropTable(
-                name: "Comments");
+            migrationBuilder.DropTable(name: "Comments");
 
-            migrationBuilder.DropTable(
-                name: "Feedbacks");
+            migrationBuilder.DropTable(name: "Feedbacks");
 
-            migrationBuilder.DropTable(
-                name: "Notifications");
+            migrationBuilder.DropTable(name: "Notifications");
 
-            migrationBuilder.DropTable(
-                name: "QuestionOptionTestResults");
+            migrationBuilder.DropTable(name: "QuestionOptionTestResults");
 
-            migrationBuilder.DropTable(
-                name: "QueuingSteps");
+            migrationBuilder.DropTable(name: "QueuingSteps");
 
-            migrationBuilder.DropTable(
-                name: "Reasons");
+            migrationBuilder.DropTable(name: "Reasons");
 
-            migrationBuilder.DropTable(
-                name: "TestRecommendations");
+            migrationBuilder.DropTable(name: "TestRecommendations");
 
-            migrationBuilder.DropTable(
-                name: "Trackings");
+            migrationBuilder.DropTable(name: "Trackings");
 
-            migrationBuilder.DropTable(
-                name: "WorkshopRegistrations");
+            migrationBuilder.DropTable(name: "WorkshopRegistrations");
 
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
+            migrationBuilder.DropTable(name: "AspNetRoles");
 
-            migrationBuilder.DropTable(
-                name: "QuestionOptions");
+            migrationBuilder.DropTable(name: "QuestionOptions");
 
-            migrationBuilder.DropTable(
-                name: "TestResults");
+            migrationBuilder.DropTable(name: "TestResults");
 
-            migrationBuilder.DropTable(
-                name: "QueuingCourseSection");
+            migrationBuilder.DropTable(name: "QueuingCourseSection");
 
-            migrationBuilder.DropTable(
-                name: "CourseRegistrations");
+            migrationBuilder.DropTable(name: "CourseRegistrations");
 
-            migrationBuilder.DropTable(
-                name: "Steps");
+            migrationBuilder.DropTable(name: "Steps");
 
-            migrationBuilder.DropTable(
-                name: "Workshops");
+            migrationBuilder.DropTable(name: "Workshops");
 
-            migrationBuilder.DropTable(
-                name: "TestQuestions");
+            migrationBuilder.DropTable(name: "TestQuestions");
 
-            migrationBuilder.DropTable(
-                name: "QueuingCourses");
+            migrationBuilder.DropTable(name: "QueuingCourses");
 
-            migrationBuilder.DropTable(
-                name: "CourseSections");
+            migrationBuilder.DropTable(name: "CourseSections");
 
-            migrationBuilder.DropTable(
-                name: "Tests");
+            migrationBuilder.DropTable(name: "Tests");
 
-            migrationBuilder.DropTable(
-                name: "Courses");
+            migrationBuilder.DropTable(name: "Courses");
 
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
+            migrationBuilder.DropTable(name: "AspNetUsers");
 
-            migrationBuilder.DropTable(
-                name: "Categories");
+            migrationBuilder.DropTable(name: "Categories");
         }
     }
 }
