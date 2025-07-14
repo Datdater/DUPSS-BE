@@ -14,5 +14,4 @@ public class TestQuestion : BaseEntity
         public Test? Test { get; set; }
 
         public ICollection<QuestionOption> QuestionOptions { get; set; } = new List<QuestionOption>();
-    }
 }

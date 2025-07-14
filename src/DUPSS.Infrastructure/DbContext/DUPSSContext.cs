@@ -61,5 +61,5 @@ public class DUPSSContext : IdentityDbContext<AppUser>
                 .HasConversion(new EnumToStringConverter<SurveyType>())
                 .HasColumnType("nvarchar(20)");
                 }
-    }
 }
+
