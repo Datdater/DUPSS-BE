@@ -5,8 +5,7 @@ using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Converters;
 
 public class Program
 {
@@ -35,8 +34,18 @@ public class Program
             .AddSwagger();
         serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
-        // MediatR
-        serviceCollection.AddConfigureMediatR();
+            builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
+
+            //EnumConverter
+            builder
+                .Services.AddControllers()
+                .AddNewtonsoftJson(opts =>
+                {
+                    opts.SerializerSettings.Converters.Add(new StringEnumConverter());
+                });
+
+            // MediatR
+            serviceCollection.AddConfigureMediatR();
 
         // AutoMapper
         serviceCollection.AddConfigureAutoMapper();

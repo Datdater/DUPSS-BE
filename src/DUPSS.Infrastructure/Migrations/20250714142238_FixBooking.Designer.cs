@@ -4,6 +4,7 @@ using DUPSS.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DUPSS.Infrastructure.Migrations
 {
     [DbContext(typeof(DUPSSContext))]
-    partial class DUPSSContextModelSnapshot : ModelSnapshot
+    [Migration("20250714142238_FixBooking")]
+    partial class FixBooking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +33,8 @@ namespace DUPSS.Infrastructure.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly>("BirthDay")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -117,12 +120,15 @@ namespace DUPSS.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("BookingFeedback")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BookingNote")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("CancelReason")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -139,6 +145,7 @@ namespace DUPSS.Infrastructure.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UrlMeeting")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
@@ -224,7 +231,7 @@ namespace DUPSS.Infrastructure.Migrations
 
                     b.Property<string>("AuthorId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
@@ -242,9 +249,12 @@ namespace DUPSS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AuthorId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Blogs");
                 });
@@ -705,16 +715,7 @@ namespace DUPSS.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SurveyType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("WorkshopId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("WorkshopId");
 
                     b.ToTable("Tests");
                 });
@@ -1133,9 +1134,7 @@ namespace DUPSS.Infrastructure.Migrations
                 {
                     b.HasOne("AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
@@ -1202,7 +1201,7 @@ namespace DUPSS.Infrastructure.Migrations
             modelBuilder.Entity("DUPSS.Domain.Entities.QuestionOption", b =>
                 {
                     b.HasOne("DUPSS.Domain.Entities.TestQuestion", "Question")
-                        .WithMany("QuestionOptions")
+                        .WithMany()
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1267,15 +1266,6 @@ namespace DUPSS.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("CourseSection");
-                });
-
-            modelBuilder.Entity("DUPSS.Domain.Entities.Test", b =>
-                {
-                    b.HasOne("DUPSS.Domain.Entities.Workshop", "Workshop")
-                        .WithMany()
-                        .HasForeignKey("WorkshopId");
-
-                    b.Navigation("Workshop");
                 });
 
             modelBuilder.Entity("DUPSS.Domain.Entities.TestQuestion", b =>
@@ -1458,11 +1448,6 @@ namespace DUPSS.Infrastructure.Migrations
             modelBuilder.Entity("DUPSS.Domain.Entities.Step", b =>
                 {
                     b.Navigation("Comments");
-                });
-
-            modelBuilder.Entity("DUPSS.Domain.Entities.TestQuestion", b =>
-                {
-                    b.Navigation("QuestionOptions");
                 });
 
             modelBuilder.Entity("DUPSS.Domain.Entities.Workshop", b =>

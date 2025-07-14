@@ -18,7 +18,7 @@ public class TokenService : ITokenService
         _configuration = configuration;
     }
 
-    public string GenerateAccessToken(Guid userId, string role)
+    public string GenerateAccessToken(string userId, string role)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(
@@ -26,7 +26,7 @@ public class TokenService : ITokenService
                 ?? throw new InvalidOperationException("JWT key not configured")
         );
 
-        var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, userId.ToString()) };
+        var claims = new List<Claim> { new(ClaimTypes.NameIdentifier, userId) };
 
         claims.Add(new Claim(ClaimTypes.Role, role));
 
@@ -63,48 +63,46 @@ public class TokenService : ITokenService
         return refreshToken;
     }
 
-	    public bool ValidateAccessToken(string token, Guid userId, string role)
-	    {
-		    userId = Guid.Empty;
-		    role = string.Empty;
+	public bool ValidateAccessToken(string token, string userId, string role)
+	{
+		userId = string.Empty;
+		role = string.Empty;
 
-		    try
-		    {
-			    var tokenHandler = new JwtSecurityTokenHandler();
-			    var key = Encoding.ASCII.GetBytes(
-				    _configuration["Jwt:Key"]
-					    ?? throw new InvalidOperationException("JWT key not configured")
-			    );
+		try
+		{
+			var tokenHandler = new JwtSecurityTokenHandler();
+			var key = Encoding.ASCII.GetBytes(
+				_configuration["Jwt:Key"]
+					?? throw new InvalidOperationException("JWT key not configured")
+			);
 
-			    tokenHandler.ValidateToken(
-				    token,
-				    new TokenValidationParameters
-				    {
-					    ValidateIssuerSigningKey = true,
-					    IssuerSigningKey = new SymmetricSecurityKey(key),
-					    ValidateIssuer = true,
-					    ValidIssuer = _configuration["Jwt:Issuer"],
-					    ValidateAudience = true,
-					    ValidAudience = _configuration["Jwt:Audience"],
-					    ValidateLifetime = true,
-					    ClockSkew = TimeSpan.Zero,
-				    },
-				    out var validatedToken
-			    );
+			tokenHandler.ValidateToken(
+				token,
+				new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = new SymmetricSecurityKey(key),
+					ValidateIssuer = true,
+					ValidIssuer = _configuration["Jwt:Issuer"],
+					ValidateAudience = true,
+					ValidAudience = _configuration["Jwt:Audience"],
+					ValidateLifetime = true,
+					ClockSkew = TimeSpan.Zero,
+				},
+				out var validatedToken
+			);
 
-			    var jwtToken = (JwtSecurityToken)validatedToken;
-			    var userIdStr = jwtToken.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
-			    if (!Guid.TryParse(userIdStr, out userId))
-				    return false;
-			    role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value;
+			var jwtToken = (JwtSecurityToken)validatedToken;
+			userId = jwtToken.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+			role = jwtToken.Claims.First(x => x.Type == ClaimTypes.Role).Value;
 
-			    return true;
-		    }
-		    catch
-		    {
-			    return false;
-		    }
-	    }
+			return true;
+		}
+		catch
+		{
+			return false;
+		}
+	}
 
     public bool ValidateRefreshToken(string token)
     {
@@ -122,7 +120,7 @@ public class TokenService : ITokenService
 
     public (string accessToken, string refreshToken) RefreshTokens(
         string refreshToken,
-		Guid userId,
+		string userId,
         string role
     )
     {
