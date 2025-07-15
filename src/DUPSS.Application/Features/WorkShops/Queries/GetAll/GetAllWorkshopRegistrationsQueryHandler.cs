@@ -32,18 +32,16 @@ namespace DUPSS.Application.Features.WorkShops.Queries.GetAll
             }
 
             // Filter
-            if (request.Filters != null)
+            if (!string.IsNullOrWhiteSpace(request.WorkshopId)) 
             {
-                foreach (var filter in request.Filters)
-                {
-                    switch (filter.Key.ToLower())
-                    {
-                        case "workshopid":
-                            baseQuery = baseQuery.Where(r => r.WorkshopId == filter.Value);
-                            break;
-                    }
-                }
+                baseQuery = baseQuery.Where(r => r.WorkshopId == request.WorkshopId);
             }
+
+            if (!string.IsNullOrWhiteSpace(request.UserId))
+            {
+                baseQuery = baseQuery.Where(r => r.UserId == request.UserId);
+            }
+
 
             // Sort
             var sortBy = request.SortBy?.ToLower();

@@ -1,4 +1,4 @@
-using DUPSS.API.Middlewares;
+﻿using DUPSS.API.Middlewares;
 using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;

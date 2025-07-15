@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DUPSS.Domain.Commons;
+﻿using DUPSS.Domain.Commons;
 
 namespace DUPSS.Domain.Entities;
 
@@ -11,4 +10,5 @@ public class Category : BaseEntity
 
     // Navigation
     public ICollection<Course> Courses { get; set; }
+    public virtual ICollection<QueuingCourse>? QueuingCourses { get; set; }
 }
