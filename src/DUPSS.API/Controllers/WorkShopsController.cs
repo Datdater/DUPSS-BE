@@ -1,4 +1,5 @@
 ﻿using DUPSS.Application.Features.WorkShops.Commands.Create;
+using DUPSS.Application.Features.WorkShops.Commands.Registration;
 using DUPSS.Application.Features.WorkShops.Commands.Update;
 using DUPSS.Application.Features.WorkShops.Queries.GetAll;
 using DUPSS.Application.Features.WorkShops.Queries.GetById;
@@ -44,10 +45,12 @@ namespace DUPSS.API.Controllers
             return Ok(result);
         }
 
-        // Workshop Registrations 
+        // Workshop Registrations
 
         [HttpGet("registrations")]
-        public async Task<IActionResult> GetAllRegistrations([FromQuery] GetAllWorkshopRegistrationsQuery query)
+        public async Task<IActionResult> GetAllRegistrations(
+            [FromQuery] GetAllWorkshopRegistrationsQuery query
+        )
         {
             var result = await mediator.Send(query);
             return Ok(result);
@@ -62,10 +65,12 @@ namespace DUPSS.API.Controllers
         }
 
         [HttpPost("registrations")]
-        public async Task<IActionResult> CreateRegistration([FromBody] CreateWorkshopRegistrationCommand command)
+        public async Task<IActionResult> CreateRegistration(
+            [FromBody] WorkshopRegistrationCommand command
+        )
         {
             var result = await mediator.Send(command);
-            return Ok(result);
+            return result.IsSuccess ? Ok(result) : BadRequest(result);
         }
     }
 }
