@@ -17,7 +17,7 @@ namespace DUPSS.API.Controllers
             var result = await mediator.Send(command);
             if (result.IsSuccess)
             {
-                return Ok(result);
+                return Created(string.Empty, result);
             }
             return BadRequest(result);
         }

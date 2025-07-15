@@ -15,5 +15,8 @@ namespace DUPSS.Application.Features.Bookings.Commands.UpdateBooking
         public BookingStatus BookingStatus { get; set; }
 
         public string? StaffId { get; set; }
+        public string? MeetingUrl { get; set; }
+        public string? Feedback { get; set; }
+        public string? CancelReason { get; set; }
     }
 }
