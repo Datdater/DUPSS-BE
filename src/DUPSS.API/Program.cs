@@ -43,6 +43,10 @@ namespace DUPSS.API
 
             // CollectionServices
             serviceCollection.AddPersistenceService(configuration);
+
+            // CORS
+            serviceCollection.AddCorsPolicy();
+
             //Identity
             builder.Services.AddIdentityService();
             //Authentication
@@ -57,6 +61,7 @@ namespace DUPSS.API
             app.UseSwaggerConfig();
 
             app.UseHttpsRedirection();
+            app.UseCorsPolicy();
 
             app.UseAuthentication();
 

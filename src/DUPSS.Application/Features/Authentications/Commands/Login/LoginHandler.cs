@@ -92,6 +92,8 @@ namespace DUPSS.Application.Features.Authentications.Commands.Login
                             UserId = user.Id,
                             Username = user.UserName!,
                             Email = user.Email!,
+                            Name = user.GetUserFullname(),
+                            Role = role ?? "Member",
                         },
                     }
                 );
