@@ -8,7 +8,7 @@ using DUPSS.Domain.Repositories;
 namespace DUPSS.Application.Features.WorkShops.Queries.GetAll
 {
     public class GetAllWorkshopsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
-    : IQueryHandler<GetAllWorkshopsQuery, PagedResult<GetAllWorkshopsResponse>>
+      : IQueryHandler<GetAllWorkshopsQuery, PagedResult<GetAllWorkshopsResponse>>
     {
         public async Task<Result<PagedResult<GetAllWorkshopsResponse>>> Handle(GetAllWorkshopsQuery request, CancellationToken cancellationToken)
         {
@@ -24,23 +24,14 @@ namespace DUPSS.Application.Features.WorkShops.Queries.GetAll
             }
 
             // Filter
-            if (request.Filters is not null)
+            if (!string.IsNullOrWhiteSpace(request.Host))
             {
-                foreach (var filter in request.Filters)
-                {
-                    switch (filter.Key.ToLower())
-                    {
-                        case "host":
-                            queryable = queryable.Where(w => w.Host.Contains(filter.Value));
-                            break;
-                        case "status":
-                            if (bool.TryParse(filter.Value, out var status))
-                            {
-                                queryable = queryable.Where(w => w.Status == status);
-                            }
-                            break;
-                    }
-                }
+                queryable = queryable.Where(w => w.Host.Contains(request.Host));
+            }
+
+            if (request.Status.HasValue)
+            {
+                queryable = queryable.Where(w => w.Status == request.Status.Value);
             }
 
             // Sort
@@ -53,19 +44,14 @@ namespace DUPSS.Application.Features.WorkShops.Queries.GetAll
                 "startdate" => sortAsc ? queryable.OrderBy(w => w.StartDate) : queryable.OrderByDescending(w => w.StartDate),
                 "enddate" => sortAsc ? queryable.OrderBy(w => w.EndDate) : queryable.OrderByDescending(w => w.EndDate),
                 "host" => sortAsc ? queryable.OrderBy(w => w.Host) : queryable.OrderByDescending(w => w.Host),
-                _ => queryable.OrderByDescending(w => w.CreatedAt) // default
+                _ => queryable.OrderByDescending(w => w.CreatedAt)
             };
 
             // Paging
-            var paged = await PagedResult<Workshop>.CreateAsync(
-                queryable,
-                request.PageIndex,
-                request.PageSize
-            );
+            var paged = await PagedResult<Workshop>.CreateAsync(queryable, request.PageIndex, request.PageSize);
 
             var result = mapper.Map<PagedResult<GetAllWorkshopsResponse>>(paged);
             return Result.Success(result);
         }
     }
-
 }

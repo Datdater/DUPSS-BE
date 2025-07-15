@@ -2,13 +2,13 @@
 
 public interface ITokenService
 {
-	string GenerateAccessToken(Guid userId, string role);
+	string GenerateAccessToken(string userId, string role);
 	string GenerateRefreshToken();
-	bool ValidateAccessToken(string token, Guid userId, string role);
+	bool ValidateAccessToken(string token, string userId, string role);
 	bool ValidateRefreshToken(string token);
 	(string accessToken, string refreshToken) RefreshTokens(
 		string refreshToken,
-		Guid userId,
+		string userId,
 		string role
 	);
 }

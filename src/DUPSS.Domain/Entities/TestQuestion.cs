@@ -11,5 +11,8 @@ public class TestQuestion : BaseEntity
     public string? CreatedBy { get; set; }
     public string? LastModifiedBy { get; set; }
 
-    public Test? Test { get; set; }
-}
+        public Test? Test { get; set; }
+
+        public ICollection<QuestionOption> QuestionOptions { get; set; } = new List<QuestionOption>();
+    }
+

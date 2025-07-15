@@ -17,10 +17,13 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssemblies([AssemblyReference.Assembly], includeInternalTypes: true);
 
     public static void AddConfigureAutoMapper(this IServiceCollection services) =>
-        
-        services.AddAutoMapper(opts => opts.AddMaps(AssemblyReference.Assembly));
-	public static void AddConfigureServiceCollection(this IServiceCollection services) =>
-	services.AddScoped<ITokenService, TokenService>()
-        .AddScoped<IEmailService, EmailService>();
+        services.AddAutoMapper(AssemblyReference.Assembly);
 
+    public static void AddConfigureServiceCollection(this IServiceCollection services) =>
+        services
+            .AddHttpContextAccessor()
+            .AddScoped<ITokenService, TokenService>()
+            .AddScoped<IEmailService, EmailService>()
+            .AddScoped<IClaimService, ClaimService>()
+            .AddScoped<IGenerateUniqueCode, GenerateUniqueCode>();
 }
