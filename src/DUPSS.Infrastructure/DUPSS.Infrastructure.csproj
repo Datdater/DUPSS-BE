@@ -22,8 +22,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DUPSS.Application\DUPSS.Application.csproj" />
+    <ProjectReference Include="..\DUPSS.Domain\DUPSS.Domain.csproj" />
   </ItemGroup>
 </Project>

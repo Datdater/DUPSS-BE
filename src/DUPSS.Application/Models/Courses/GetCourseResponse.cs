@@ -17,4 +17,6 @@ public class GetCourseResponse
     public int? TotalDuration { get; set; }
     public int? TotalSection { get; set; }
     public int? TotalStep { get; set; }
+    public float? RatingAverage { get; set; }
+    public int? RatingCount { get; set; }
 }

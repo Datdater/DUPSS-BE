@@ -74,7 +74,6 @@ namespace DUPSS.API
 
             // Swagger
             app.UseSwaggerConfig();
-
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");

@@ -15,9 +15,9 @@ namespace DUPSS.Infrastructure.DependencyInjection.Extentions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPersistenceService(
-        this IServiceCollection services,
-        IConfiguration configuration
-    )
+     this IServiceCollection services,
+     IConfiguration configuration
+ )
     {
         services.AddDbContext<DUPSSContext>(opt =>
             opt.UseSqlServer(configuration.GetConnectionString("default"))
