@@ -15,5 +15,6 @@ public class QueuingCourseProfile : Profile
         CreateMap<CreateQueuingCourseCommand, QueuingCourse>();
         CreateMap<CreateQueuingCourseSection, QueuingCourseSection>();
         CreateMap<CreateQueuingStep, QueuingStep>();
+        CreateMap<QueuingCourse, Course>();
     }
 }

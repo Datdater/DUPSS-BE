@@ -1,4 +1,5 @@
 ﻿using DUPSS.Application.Features.Courses.Queries.GetById;
+using DUPSS.Application.Features.QueuingCourses.Commands.Approve;
 using DUPSS.Application.Features.QueuingCourses.Commands.Create;
 using DUPSS.Application.Features.QueuingCourses.Queries.GetAll;
 using MediatR;
@@ -69,9 +70,20 @@ public class QueuingCourseController(IMediator mediator) : BaseAPIController
     //    return BadRequest(result);
     //}
 
-    //[HttpPatch("{id}")]
-    //public async Task<IActionResult> ApproveQueuingCourse(string id)
-    //{
+    [HttpPatch("{code}")]
+    [Authorize(Roles = "Manager")]
+    public async Task<IActionResult> ApproveQueuingCourse(
+        string code,
+        [FromBody] ApproveQueuingCourseCommand command
+    )
+    {
+        command.Code = code;
+        var result = await mediator.Send(command);
+        if (result.IsSuccess)
+        {
+            return Ok(result);
+        }
 
-    //}
+        return BadRequest(result);
+    }
 }
