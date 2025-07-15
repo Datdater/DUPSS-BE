@@ -51,13 +51,25 @@ namespace DUPSS.API
             // Authentication & Authorization
             builder.Services.AddAuthenticationAuthorizationService(configuration);
 
+            // CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    }
+                );
+            });
+
             // OpenAPI
             builder.Services.AddOpenApi();
 
             var app = builder.Build();
 
+            app.UseCors("AllowAll");
             app.UseSwaggerConfig();
-
             app.UseHttpsRedirection();
 
             app.UseAuthentication();
