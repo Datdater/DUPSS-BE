@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DUPSS.Application.Abtractions;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
 using DUPSS.Domain.Entities;
@@ -11,14 +12,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DUPSS.Application.Features.CourseRegistrations.Commands.Create;
 
-public class CreateCourseRegistrationCommandHandler(IUnitOfWork unitOfWork)
-    : ICommandHandler<CreateCourseRegistrationCommand>
+public class CreateCourseRegistrationCommandHandler(
+    IUnitOfWork unitOfWork,
+    IClaimService claimService
+) : ICommandHandler<CreateCourseRegistrationCommand>
 {
     public async Task<Result> Handle(
         CreateCourseRegistrationCommand request,
         CancellationToken cancellationToken
     )
     {
+        var userId = claimService.GetCurrentUser;
         // Check if course exists
         var course = await unitOfWork.Repository<Course>().GetByIdAsync(request.CourseId);
         if (course == null)
@@ -30,7 +34,7 @@ public class CreateCourseRegistrationCommandHandler(IUnitOfWork unitOfWork)
         var existingRegistrations = unitOfWork
             .Repository<CourseRegistration>()
             .GetQueryable()
-            .Where(cr => cr.CourseId == request.CourseId && cr.StudentId == request.StudentId);
+            .Where(cr => cr.CourseId == request.CourseId && cr.StudentId == userId);
 
         if (await existingRegistrations.AnyAsync(cancellationToken))
             return Result.Failure(
@@ -40,12 +44,8 @@ public class CreateCourseRegistrationCommandHandler(IUnitOfWork unitOfWork)
         var courseRegistration = new CourseRegistration
         {
             CourseId = request.CourseId,
-            StudentId = request.StudentId,
-            SellingDate = request.SellingDate,
-            CourseStartedDate = request.CourseStartedDate,
-            CourseProgress = request.CourseProgress,
-            Status = request.Status,
-            CertificateFile = request.CertificateFile,
+            StudentId = userId,
+            CourseStartedDate = DateTime.UtcNow,
         };
 
         await unitOfWork.Repository<CourseRegistration>().AddAsync(courseRegistration);

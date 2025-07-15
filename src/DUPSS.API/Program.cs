@@ -61,19 +61,19 @@ namespace DUPSS.API
             // CORS
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy =>
-                {
-                    policy.AllowAnyOrigin()
-                          .AllowAnyMethod()
-                          .AllowAnyHeader();
-                });
+                options.AddPolicy(
+                    "AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    }
+                );
             });
 
             var app = builder.Build();
-
+            app.UseStaticFiles();
             // Swagger
             app.UseSwaggerConfig();
-
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using DUPSS.Application.Abtractions;
 using Microsoft.AspNetCore.Http;
 
@@ -19,6 +14,15 @@ namespace DUPSS.Application.Services
                     .HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)
                     ?.Value;
                 return userId ?? string.Empty;
+            }
+        }
+
+        public string GetCurrentRole
+        {
+            get
+            {
+                var role = httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.Role)?.Value;
+                return role ?? string.Empty;
             }
         }
     }
