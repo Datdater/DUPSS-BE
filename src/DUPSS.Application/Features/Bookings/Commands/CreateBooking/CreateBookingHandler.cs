@@ -38,12 +38,12 @@ namespace DUPSS.Application.Features.Bookings.Commands.CreateBooking
 
                 var booking = new BookingRequest
                 {
-                    UserId = userId,
-                    Status = BookingStatus.Pending,
                     BookingCode = bookingCode,
+                    UserId = userId,
                     BookingDate = request.BookingDate,
                     BookingNote = request.BookingNote,
                 };
+                booking.SetPendingStatus();
                 bookingRepository.AddAsync(booking);
                 return unitOfWork
                     .SaveChangesAsync(cancellationToken)
