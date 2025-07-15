@@ -27,7 +27,7 @@ public class QueuingCourse : BaseEntity
     public virtual AppUser? User { get; set; }
 
     [ForeignKey("Category")]
-    public string CateId { get; set; }
+    public string CategoryId { get; set; }
     public virtual Category? Category { get; set; }
 
     public virtual required ICollection<QueuingCourseSection> QueuingCourseSections { get; set; }
