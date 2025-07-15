@@ -1,4 +1,5 @@
 ﻿using DUPSS.Domain.Commons;
+using DUPSS.Domain.Enums;
 
 namespace DUPSS.Domain.Entities;
 
@@ -15,6 +16,8 @@ public class QueuingCourse : BaseEntity
     public int TotalDuration { get; set; }
     public int TotalSection { get; set; }
     public int TotalStep { get; set; }
+
+    public QueuingCourseStatus QueuingCourseStatus { get; set; } = QueuingCourseStatus.Pending;
 
     public DateTime CreatedDate { get; set; }
     public DateTime UpdatedDate { get; set; }
