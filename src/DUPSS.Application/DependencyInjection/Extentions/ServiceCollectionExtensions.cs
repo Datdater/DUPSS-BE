@@ -25,5 +25,6 @@ public static class ServiceCollectionExtensions
             .AddScoped<ITokenService, TokenService>()
             .AddScoped<IEmailService, EmailService>()
             .AddScoped<IClaimService, ClaimService>()
-            .AddScoped<IGenerateUniqueCode, GenerateUniqueCode>();
+            .AddScoped<IGenerateUniqueCode, GenerateUniqueCode>()
+            .AddScoped<IFileService, FileService>();
 }
