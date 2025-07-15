@@ -5,6 +5,11 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Configurations\**" />
+    <EmbeddedResource Remove="Configurations\**" />
+    <None Remove="Configurations\**" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Remove="Entities\Categories.cs" />
     <Compile Remove="Entities\Comments.cs" />
     <Compile Remove="Entities\CourseSections.cs" />
@@ -27,9 +32,6 @@
     <None Remove="Entities\TestRecommendation" />
     <None Remove="Enums\BookingStatus" />
     <None Remove="Enums\NewFile1.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Configurations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />

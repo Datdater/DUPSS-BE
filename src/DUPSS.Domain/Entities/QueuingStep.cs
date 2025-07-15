@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DUPSS.Domain.Commons;
+﻿using DUPSS.Domain.Commons;
 
 namespace DUPSS.Domain.Entities;
 
@@ -26,5 +20,5 @@ public class QueuingStep : BaseEntity
 
     [MaxLength(500)]
     public string? VideoURL { get; set; }
-    public QueuingCourseSection QueuingCourese { get; set; } = null!;
+    public QueuingCourseSection QueuingCouresSection { get; set; } = null!;
 }
