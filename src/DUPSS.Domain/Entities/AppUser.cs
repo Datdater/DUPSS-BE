@@ -9,7 +9,7 @@ public class AppUser : IdentityUser<string>
     public string LastName { get; set; }
     public UserStatus Status { get; set; } = UserStatus.Pending;
     public bool Gender { get; set; }
-    public DateOnly BirthDay { get; set; }
+    public DateOnly? BirthDay { get; set; }
 
     public string GetUserFullname()
     {
