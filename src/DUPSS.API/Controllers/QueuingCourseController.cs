@@ -1,8 +1,8 @@
-﻿using DUPSS.Application.Features.Courses.Commands.Create;
-using DUPSS.Application.Features.Courses.Commands.Update;
-using DUPSS.Application.Features.Courses.Queries.GetById;
+﻿using DUPSS.Application.Features.Courses.Queries.GetById;
+using DUPSS.Application.Features.QueuingCourses.Commands.Create;
 using DUPSS.Application.Features.QueuingCourses.Queries.GetAll;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DUPSS.API.Controllers;
@@ -10,6 +10,7 @@ namespace DUPSS.API.Controllers;
 public class QueuingCourseController(IMediator mediator) : BaseAPIController
 {
     [HttpGet]
+    [Authorize(Roles = "Manager,Staff")]
     public async Task<IActionResult> GetAllQueuingCourses(
         [FromQuery] GetAllQueuingCourseQuery query
     )
@@ -37,7 +38,10 @@ public class QueuingCourseController(IMediator mediator) : BaseAPIController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateCourse([FromBody] CreateCourseCommand command)
+    [Authorize(Roles = "Staff")]
+    public async Task<IActionResult> CreateQueuingCourse(
+        [FromBody] CreateQueuingCourseCommand command
+    )
     {
         var result = await mediator.Send(command);
         if (result.IsSuccess)
@@ -48,22 +52,22 @@ public class QueuingCourseController(IMediator mediator) : BaseAPIController
         return BadRequest(result);
     }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateCourse(string id, [FromBody] UpdateCourseCommand command)
-    {
-        if (id != command.Id)
-        {
-            return BadRequest("Course ID mismatch.");
-        }
+    //[HttpPut("{id}")]
+    //public async Task<IActionResult> UpdateCourse(string id, [FromBody] UpdateCourseCommand command)
+    //{
+    //    if (id != command.Id)
+    //    {
+    //        return BadRequest("Course ID mismatch.");
+    //    }
 
-        var result = await mediator.Send(command);
-        if (result.IsSuccess)
-        {
-            return Ok(result);
-        }
+    //    var result = await mediator.Send(command);
+    //    if (result.IsSuccess)
+    //    {
+    //        return Ok(result);
+    //    }
 
-        return BadRequest(result);
-    }
+    //    return BadRequest(result);
+    //}
 
     //[HttpPatch("{id}")]
     //public async Task<IActionResult> ApproveQueuingCourse(string id)

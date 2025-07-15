@@ -15,16 +15,21 @@ namespace DUPSS.API
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             var serviceCollection = builder.Services;
+
+            // Swagger
             serviceCollection
                 .AddSwaggerGenNewtonsoftSupport()
                 .AddFluentValidationRulesToSwagger()
                 .AddEndpointsApiExplorer()
                 .AddSwagger();
+
+            // Middleware
             serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
+            // Email Settings
             builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
-            //EnumConverter
+            // Controllers + JSON enum as string
             builder
                 .Services.AddControllers()
                 .AddNewtonsoftJson(opts =>
@@ -41,25 +46,40 @@ namespace DUPSS.API
             // Services
             serviceCollection.AddConfigureServiceCollection();
 
-            // CollectionServices
+            // Infrastructure
             serviceCollection.AddPersistenceService(configuration);
-            //Identity
+
+            // Identity
             builder.Services.AddIdentityService();
-            //Authentication
+
+            // Authentication & Authorization
             builder.Services.AddAuthenticationAuthorizationService(configuration);
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+            // OpenAPI
             builder.Services.AddOpenApi();
+
+            // CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    }
+                );
+            });
 
             var app = builder.Build();
 
+            // Swagger
             app.UseSwaggerConfig();
 
             app.UseHttpsRedirection();
 
-            app.UseAuthentication();
+            app.UseCors("AllowAll");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
