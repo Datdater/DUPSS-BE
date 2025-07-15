@@ -15,15 +15,11 @@ namespace DUPSS.API
             var builder = WebApplication.CreateBuilder(args);
             var configuration = builder.Configuration;
             var serviceCollection = builder.Services;
-
-            // Swagger
             serviceCollection
                 .AddSwaggerGenNewtonsoftSupport()
                 .AddFluentValidationRulesToSwagger()
                 .AddEndpointsApiExplorer()
                 .AddSwagger();
-
-            // Middleware
             serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
 
             // Email Settings
@@ -58,28 +54,14 @@ namespace DUPSS.API
             // OpenAPI
             builder.Services.AddOpenApi();
 
-            // CORS
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy(
-                    "AllowAll",
-                    policy =>
-                    {
-                        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-                    }
-                );
-            });
-
             var app = builder.Build();
 
-            // Swagger
             app.UseSwaggerConfig();
 
             app.UseHttpsRedirection();
 
-            app.UseCors("AllowAll");
-
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.MapControllers();

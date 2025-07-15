@@ -38,9 +38,10 @@ namespace DUPSS.Infrastructure.DbContext
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            //// Configure the Tracking -> Step relationship to prevent cascade delete
-            builder.Entity<Tracking>(entiy =>
-                entiy.HasOne(t => t.Step).WithMany().OnDelete(DeleteBehavior.NoAction) // Prevent cascade delete for Tracking -> Step relationship
+
+            // Configure the Tracking -> Step relationship to prevent cascade delete
+            builder.Entity<Tracking>(entity =>
+                entity.HasOne(t => t.Step).WithMany().OnDelete(DeleteBehavior.NoAction)
             );
 
             // Configure the CourseRegistration -> Tracking relationship
@@ -58,6 +59,13 @@ namespace DUPSS.Infrastructure.DbContext
                 .HasForeignKey(c => c.ParentCommentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            // Configure Test enum conversion
+            builder
+                .Entity<Test>()
+                .Property(e => e.SurveyType)
+                .HasConversion(new EnumToStringConverter<SurveyType>())
+                .HasColumnType("nvarchar(20)");
+
             builder
                 .Entity<BookingRequest>()
                 .Property(a => a.Status)
@@ -65,7 +73,14 @@ namespace DUPSS.Infrastructure.DbContext
                     aS => aS.ToString(),
                     aS => (BookingStatus)Enum.Parse(typeof(BookingStatus), aS)
                 );
+
+            builder
+                .Entity<QueuingCourse>()
+                .Property(a => a.QueuingCourseStatus)
+                .HasConversion(
+                    aS => aS.ToString(),
+                    aS => (QueuingCourseStatus)Enum.Parse(typeof(QueuingCourseStatus), aS)
+                );
         }
     }
 }
-

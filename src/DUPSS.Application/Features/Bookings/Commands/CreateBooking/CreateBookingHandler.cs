@@ -42,7 +42,6 @@ namespace DUPSS.Application.Features.Bookings.Commands.CreateBooking
                     Status = BookingStatus.Pending,
                     BookingCode = bookingCode,
                     BookingDate = request.BookingDate,
-                    BookingNote = request.BookingNote,
                 };
                 bookingRepository.AddAsync(booking);
                 return unitOfWork

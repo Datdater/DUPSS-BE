@@ -2,7 +2,7 @@
 using DUPSS.Application.Features.WorkShops.Commands.Update;
 using DUPSS.Application.Features.WorkShops.Queries.GetAll;
 using DUPSS.Application.Features.WorkShops.Queries.GetById;
-
+using DUPSS.Domain.Abstractions.Shared;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +16,7 @@ namespace DUPSS.API.Controllers
         public async Task<IActionResult> GetAll([FromQuery] GetAllWorkshopsQuery query)
         {
             var result = await mediator.Send(query);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
@@ -24,24 +24,24 @@ namespace DUPSS.API.Controllers
         {
             var query = new GetWorkshopByIdQuery(id);
             var result = await mediator.Send(query);
-            return result.IsSuccess ? Ok(result.Value) : NotFound(result.Error);
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateWorkshopCommand command)
         {
             var result = await mediator.Send(command);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(string id, [FromBody] UpdateWorkshopCommand command)
         {
             if (id != command.Id)
-                return BadRequest("Mismatched ID in URL and payload");
+                return Ok(Result.Failure);
 
             var result = await mediator.Send(command);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return Ok(result);
         }
 
         // Workshop Registrations 
@@ -50,7 +50,7 @@ namespace DUPSS.API.Controllers
         public async Task<IActionResult> GetAllRegistrations([FromQuery] GetAllWorkshopRegistrationsQuery query)
         {
             var result = await mediator.Send(query);
-            return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+            return Ok(result);
         }
 
         [HttpGet("registrations/{id}")]
@@ -58,14 +58,14 @@ namespace DUPSS.API.Controllers
         {
             var query = new GetWorkshopRegistrationByIdQuery(id);
             var result = await mediator.Send(query);
-            return result.IsSuccess ? Ok(result.Value) : NotFound(result.Error);
+            return Ok(result);
         }
 
         [HttpPost("registrations")]
         public async Task<IActionResult> CreateRegistration([FromBody] CreateWorkshopRegistrationCommand command)
         {
             var result = await mediator.Send(command);
-            return result.IsSuccess ? Ok() : BadRequest(result.Error);
+            return Ok(result);
         }
     }
 }
