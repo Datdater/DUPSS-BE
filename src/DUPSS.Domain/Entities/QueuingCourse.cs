@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DUPSS.Domain.Commons;
+﻿using DUPSS.Domain.Commons;
 using DUPSS.Domain.Enums;
 
 namespace DUPSS.Domain.Entities;
@@ -15,11 +10,26 @@ public class QueuingCourse : BaseEntity
     public string PictureUrl { get; set; }
     public string Summary { get; set; }
     public string Content { get; set; }
+    public double Price { get; set; }
+    public double OldPrice { get; set; }
     public string AttachmentUrl { get; set; }
     public int TotalDuration { get; set; }
     public int TotalSection { get; set; }
     public int TotalStep { get; set; }
     public QueuingCourseStatus QueuingCourseStatus { get; set; }
 
-    public ICollection<Reason> Reasons { get; set; } = new List<Reason>();
+    public DateTime CreatedDate { get; set; }
+    public DateTime UpdatedDate { get; set; }
+
+    //navigation
+    [ForeignKey("User")]
+    public string? CreatedBy { get; set; }
+    public virtual AppUser? User { get; set; }
+
+    [ForeignKey("Category")]
+    public string CateId { get; set; }
+    public virtual Category? Category { get; set; }
+
+    public virtual required ICollection<QueuingCourseSection> QueuingCourseSections { get; set; }
+    public virtual ICollection<Reason>? Reasons { get; set; }
 }
