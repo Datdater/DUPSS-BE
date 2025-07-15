@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DUPSS.Application.Models.Courses;
+﻿using DUPSS.Application.Models.Courses;
 using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
 
