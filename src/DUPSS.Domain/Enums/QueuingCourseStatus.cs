@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DUPSS.Domain.Enums;
 
-namespace DUPSS.Domain.Enums;
+public enum QueuingCourseStatus
+{
+    [EnumMember(Value = "Pending")]
+    Pending,
 
-public enum QueuingCourseStatus { }
+    [EnumMember(Value = "Reject")]
+    Reject,
+}
