@@ -12,13 +12,13 @@ public class QueuingStep : BaseEntity
 
     public string? Attachment { get; set; }
 
-    public string CourseSectionId { get; set; }
-
     public int? Duration { get; set; }
 
     public bool Type { get; set; }
 
     [MaxLength(500)]
     public string? VideoURL { get; set; }
-    public QueuingCourseSection QueuingCouresSection { get; set; } = null!;
+
+    public string? QueuingCourseSectionId { get; set; }
+    public QueuingCourseSection QueuingCourseSection { get; set; } = null!;
 }
