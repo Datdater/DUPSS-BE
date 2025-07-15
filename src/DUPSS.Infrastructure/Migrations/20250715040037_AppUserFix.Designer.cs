@@ -4,6 +4,7 @@ using DUPSS.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DUPSS.Infrastructure.Migrations
 {
     [DbContext(typeof(DUPSSContext))]
-    partial class DUPSSContextModelSnapshot : ModelSnapshot
+    [Migration("20250715040037_AppUserFix")]
+    partial class AppUserFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -528,9 +531,8 @@ namespace DUPSS.Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("QueuingCourseStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("QueuingCourseStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Summary")
                         .IsRequired()
@@ -568,7 +570,8 @@ namespace DUPSS.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("QueuingCourseId")
+                    b.Property<string>("QueuingCoureseId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SectionName")
@@ -583,7 +586,7 @@ namespace DUPSS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QueuingCourseId");
+                    b.HasIndex("QueuingCoureseId");
 
                     b.ToTable("QueuingCourseSection");
                 });
@@ -599,6 +602,10 @@ namespace DUPSS.Infrastructure.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CourseSectionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -608,7 +615,7 @@ namespace DUPSS.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("QueuingCourseSectionId")
+                    b.Property<string>("QueuingCouresSectionId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("StepNumber")
@@ -627,7 +634,7 @@ namespace DUPSS.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QueuingCourseSectionId");
+                    b.HasIndex("QueuingCouresSectionId");
 
                     b.ToTable("QueuingSteps");
                 });
@@ -1267,18 +1274,20 @@ namespace DUPSS.Infrastructure.Migrations
                 {
                     b.HasOne("DUPSS.Domain.Entities.QueuingCourse", "QueuingCourese")
                         .WithMany("QueuingCourseSections")
-                        .HasForeignKey("QueuingCourseId");
+                        .HasForeignKey("QueuingCoureseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("QueuingCourese");
                 });
 
             modelBuilder.Entity("DUPSS.Domain.Entities.QueuingStep", b =>
                 {
-                    b.HasOne("DUPSS.Domain.Entities.QueuingCourseSection", "QueuingCourseSection")
+                    b.HasOne("DUPSS.Domain.Entities.QueuingCourseSection", "QueuingCouresSection")
                         .WithMany("Steps")
-                        .HasForeignKey("QueuingCourseSectionId");
+                        .HasForeignKey("QueuingCouresSectionId");
 
-                    b.Navigation("QueuingCourseSection");
+                    b.Navigation("QueuingCouresSection");
                 });
 
             modelBuilder.Entity("DUPSS.Domain.Entities.Reason", b =>

@@ -5,7 +5,6 @@ using DUPSS.Application.Services;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace DUPSS.Application.DependencyInjection.Extentions;
 
@@ -18,8 +17,7 @@ public static class ServiceCollectionExtensions
             .AddValidatorsFromAssemblies([AssemblyReference.Assembly], includeInternalTypes: true);
 
     public static void AddConfigureAutoMapper(this IServiceCollection services) =>
-    services.AddAutoMapper(AssemblyReference.Assembly);
-
+        services.AddAutoMapper(AssemblyReference.Assembly);
 
     public static void AddConfigureServiceCollection(this IServiceCollection services) =>
         services
