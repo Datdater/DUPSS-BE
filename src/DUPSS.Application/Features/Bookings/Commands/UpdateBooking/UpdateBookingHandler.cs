@@ -24,14 +24,46 @@ namespace DUPSS.Application.Features.Bookings.Commands.UpdateBooking
                 var booking = await unitOfWork
                     .Repository<BookingRequest>()
                     .GetQueryable()
-                    .FirstOrDefaultAsync(x => x.BookingCode == request.BookingCode);
+                    .FirstOrDefaultAsync(
+                        x => x.BookingCode == request.BookingCode,
+                        cancellationToken
+                    );
                 if (booking == null)
                 {
                     return Result.Failure(new Error("Error.BookingNotFound", "Booking not found."));
                 }
-                if (request.StaffId != null)
-                    booking.StaffId = request.StaffId;
-                booking.Status = request.BookingStatus;
+                switch (request.BookingStatus)
+                {
+                    case Domain.Enums.BookingStatus.Approved:
+                        booking.ApproveBooking(
+                            request.StaffId
+                                ?? throw new ArgumentNullException(nameof(request.StaffId)),
+                            request.MeetingUrl
+                        );
+                        break;
+                    case Domain.Enums.BookingStatus.Completed:
+                        booking.CompleteBooking(request.Feedback);
+                        break;
+                    case Domain.Enums.BookingStatus.Cancelled:
+                        if (
+                            booking.Status == Domain.Enums.BookingStatus.Approved
+                            || booking.Status == Domain.Enums.BookingStatus.Completed
+                        )
+                        {
+                            return Result.Failure(
+                                new Error(
+                                    "Error.BookingCannotBeCancelled",
+                                    "Cannot cancel a booking that has already been approved or completed."
+                                )
+                            );
+                        }
+
+                        booking.CancelBooking(
+                            request.CancelReason
+                                ?? throw new ArgumentNullException(nameof(request.CancelReason))
+                        );
+                        break;
+                }
                 await unitOfWork.Repository<BookingRequest>().UpdateAsync(booking);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
                 return Result.Success();
