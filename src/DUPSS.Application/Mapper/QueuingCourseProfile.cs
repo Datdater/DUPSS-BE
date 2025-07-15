@@ -12,6 +12,7 @@ public class QueuingCourseProfile : Profile
         CreateMap<QueuingCourse, GetAllQueuingCoursesResponse>()
             .ForMember(des => des.CategoryName, src => src.MapFrom(a => a.Category.CateName))
             .ForMember(des => des.InstructorName, src => src.MapFrom(a => a.User.GetUserFullname()))
+            .ForMember(des => des.Status, src => src.MapFrom(a => a.QueuingCourseStatus))
             .ForMember(des => des.Duration, src => src.MapFrom(a => a.TotalDuration));
         CreateMap<CreateQueuingCourseCommand, QueuingCourse>();
         CreateMap<CreateQueuingCourseSection, QueuingCourseSection>();
