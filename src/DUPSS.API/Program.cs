@@ -1,44 +1,35 @@
 ﻿using DUPSS.API.Middlewares;
 using DUPSS.Application.Commons;
 using DUPSS.Application.DependencyInjection.Extentions;
-using DUPSS.Infrastructure.DbContext;
 using DUPSS.Infrastructure.DependencyInjection.Extentions;
 using HSMS.API.DependencyInjection.Extentions;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Converters;
 
-public class Program
+namespace DUPSS.API
 {
-    public static void Main(string[] args)
+    public class Program
     {
-        var builder = WebApplication.CreateBuilder(args);
-        var configuration = builder.Configuration;
-        var serviceCollection = builder.Services;
-
-        // Thêm CORS
-        serviceCollection.AddCors(options =>
+        public static void Main(string[] args)
         {
-            options.AddPolicy("AllowFrontend", policy =>
-            {
-                policy.WithOrigins("http://localhost:3000")
-                      .AllowAnyMethod()
-                      .AllowAnyHeader()
-                      .AllowCredentials();
-            });
-        });
+            var builder = WebApplication.CreateBuilder(args);
+            var configuration = builder.Configuration;
+            var serviceCollection = builder.Services;
 
-        serviceCollection
-            .AddSwaggerGenNewtonsoftSupport()
-            .AddFluentValidationRulesToSwagger()
-            .AddEndpointsApiExplorer()
-            .AddSwagger();
-        serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
+            // Swagger
+            serviceCollection
+                .AddSwaggerGenNewtonsoftSupport()
+                .AddFluentValidationRulesToSwagger()
+                .AddEndpointsApiExplorer()
+                .AddSwagger();
 
+            // Middleware
+            serviceCollection.AddTransient<ExceptionHandlingMiddleware>();
+
+            // Email Settings
             builder.Services.Configure<EmailSettings>(configuration.GetSection("EmailSettings"));
 
-            //EnumConverter
+            // Controllers + JSON enum as string
             builder
                 .Services.AddControllers()
                 .AddNewtonsoftJson(opts =>
@@ -49,39 +40,51 @@ public class Program
             // MediatR
             serviceCollection.AddConfigureMediatR();
 
-        // AutoMapper
-        serviceCollection.AddConfigureAutoMapper();
+            // AutoMapper
+            serviceCollection.AddConfigureAutoMapper();
 
-        // CollectionServices
-        serviceCollection.AddPersistenceService(configuration);
+            // Services
+            serviceCollection.AddConfigureServiceCollection();
 
-        builder.Services.AddDbContext<DUPSSContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("default"))
-        );
+            // Infrastructure
+            serviceCollection.AddPersistenceService(configuration);
 
-        builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
-        {
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-            options.Lockout.MaxFailedAccessAttempts = 5;
-            options.User.RequireUniqueEmail = true;
-        })
-        .AddEntityFrameworkStores<DUPSSContext>()
-        .AddDefaultTokenProviders();
+            // Identity
+            builder.Services.AddIdentityService();
 
-        builder.Services.AddControllers();
-        builder.Services.AddOpenApi();
+            // Authentication & Authorization
+            builder.Services.AddAuthenticationAuthorizationService(configuration);
 
-        var app = builder.Build();
+            // OpenAPI
+            builder.Services.AddOpenApi();
 
-        app.UseSwaggerConfig();
-        app.UseHttpsRedirection();
+            // CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(
+                    "AllowAll",
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    }
+                );
+            });
 
-        // Sử dụng CORS
-        app.UseCors("AllowFrontend");
+            var app = builder.Build();
 
-        app.UseAuthorization();
-        app.MapControllers();
+            // Swagger
+            app.UseSwaggerConfig();
 
-        app.Run();
+            app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
+            app.MapControllers();
+
+            app.Run();
+        }
     }
 }

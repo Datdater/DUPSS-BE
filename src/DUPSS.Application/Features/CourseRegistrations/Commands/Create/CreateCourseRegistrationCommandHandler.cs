@@ -41,11 +41,7 @@ public class CreateCourseRegistrationCommandHandler(IUnitOfWork unitOfWork)
         {
             CourseId = request.CourseId,
             StudentId = request.StudentId,
-            SellingDate = request.SellingDate,
-            CourseStartedDate = request.CourseStartedDate,
-            CourseProgress = request.CourseProgress,
-            Status = request.Status,
-            CertificateFile = request.CertificateFile,
+            CourseStartedDate = DateTime.UtcNow,
         };
 
         await unitOfWork.Repository<CourseRegistration>().AddAsync(courseRegistration);

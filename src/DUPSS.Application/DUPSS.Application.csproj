@@ -27,6 +27,7 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Features\Bookings\Queries\" />
+	  <Folder Include="Features\Steps\Commands\" />
 	  <Folder Include="Utils\NewFolder\" />
 	</ItemGroup>
 </Project>
