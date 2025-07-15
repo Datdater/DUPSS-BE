@@ -31,6 +31,6 @@ public class QueuingCourse : BaseEntity
     public string CategoryId { get; set; }
     public virtual Category? Category { get; set; }
 
-    public virtual required ICollection<QueuingCourseSection> QueuingCourseSections { get; set; }
+    public virtual ICollection<QueuingCourseSection> QueuingCourseSections { get; set; } = [];
     public virtual ICollection<Reason>? Reasons { get; set; }
 }

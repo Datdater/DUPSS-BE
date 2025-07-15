@@ -27,6 +27,8 @@ public class ApproveQueuingCourseCommandHandler(
         var queuingCourse = await unitOfWork
             .Repository<QueuingCourse>()
             .GetQueryable()
+            .Include(x => x.QueuingCourseSections)
+            .ThenInclude(x => x.Steps)
             .FirstOrDefaultAsync(x => x.CourseCode == request.Code);
 
         if (queuingCourse == null)

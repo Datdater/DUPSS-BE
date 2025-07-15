@@ -5,6 +5,7 @@ using DUPSS.Domain.Abstractions.Message;
 using DUPSS.Domain.Abstractions.Shared;
 using DUPSS.Domain.Entities;
 using DUPSS.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace DUPSS.Application.Features.QueuingCourses.Queries.GetAll;
 
@@ -35,6 +36,7 @@ public class GetAllQueuingCourseQueryHandler(
                 c.CourseName.Contains(request.Search) || c.CourseCode.Contains(request.Search)
             );
         }
+        queryable = queryable.Include(x => x.Category).Include(x => x.User);
 
         var queuingCourses = await PagedResult<QueuingCourse>.CreateAsync(
             queryable,
@@ -43,6 +45,7 @@ public class GetAllQueuingCourseQueryHandler(
         );
 
         var res = mapper.Map<PagedResult<GetAllQueuingCoursesResponse>>(queuingCourses);
+
         return Result.Success(res);
     }
 }
