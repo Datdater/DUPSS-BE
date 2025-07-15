@@ -11,5 +11,4 @@ namespace DUPSS.Application.Features.CourseRegistrations.Commands.Create;
 public class CreateCourseRegistrationCommand : ICommand
 {
     public string CourseId { get; set; }
-    public string StudentId { get; set; }
 }

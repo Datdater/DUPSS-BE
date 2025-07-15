@@ -8,10 +8,7 @@
     <ProjectReference Include="..\DUPSS.Domain\DUPSS.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference
-      Include="AutoMapper.Extensions.Microsoft.DependencyInjection"
-      Version="12.0.1"
-    />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
     <PackageReference Include="FluentValidation" Version="11.8.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.1" />
     <PackageReference Include="MailKit" Version="4.12.1" />

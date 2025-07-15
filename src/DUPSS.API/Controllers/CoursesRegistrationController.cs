@@ -2,6 +2,7 @@
 using DUPSS.Application.Features.CourseRegistrations.Commands.Update;
 using DUPSS.Application.Features.CourseRegistrations.Queries.GetAllCourseRegistration;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DUPSS.API.Controllers;
@@ -9,6 +10,7 @@ namespace DUPSS.API.Controllers;
 public class CoursesRegistrationController(IMediator mediator) : BaseAPIController
 {
     [HttpPost]
+    [Authorize]
     public async Task<IActionResult> RegisterCourse(
         [FromBody] CreateCourseRegistrationCommand command
     )
