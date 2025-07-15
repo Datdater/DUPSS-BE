@@ -4,6 +4,7 @@ using DUPSS.Infrastructure.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DUPSS.Infrastructure.Migrations
 {
     [DbContext(typeof(DUPSSContext))]
-    partial class DUPSSContextModelSnapshot : ModelSnapshot
+    [Migration("20250715040037_AppUserFix")]
+    partial class AppUserFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -528,9 +531,8 @@ namespace DUPSS.Infrastructure.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
-                    b.Property<string>("QueuingCourseStatus")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("QueuingCourseStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("Summary")
                         .IsRequired()
