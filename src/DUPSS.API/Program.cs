@@ -71,10 +71,9 @@ namespace DUPSS.API
             });
 
             var app = builder.Build();
-
+            app.UseStaticFiles();
             // Swagger
             app.UseSwaggerConfig();
-
             app.UseHttpsRedirection();
 
             app.UseCors("AllowAll");

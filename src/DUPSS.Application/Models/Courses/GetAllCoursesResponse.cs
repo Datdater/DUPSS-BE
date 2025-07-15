@@ -17,4 +17,5 @@ public class GetAllCoursesResponse
     public int? TotalDuration { get; set; }
     public int? TotalSection { get; set; }
     public int? TotalStep { get; set; }
+    public string CategoryName { get; set; } = string.Empty;
 }
