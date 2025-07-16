@@ -35,7 +35,7 @@ namespace DUPSS.Application.Features.Bookings.Queries.GetAllBookingByUser
                 {
                     Id = x.Id,
                     BookingCode = x.BookingCode,
-                    BookingDate = x.BookingDate,
+                    BookingDate = DateTime.SpecifyKind(x.BookingDate, DateTimeKind.Utc),
                     BookingNote = x.BookingNote,
                     StaffName = x.Staff?.GetUserFullname(),
                     BookingStatus = x.Status,

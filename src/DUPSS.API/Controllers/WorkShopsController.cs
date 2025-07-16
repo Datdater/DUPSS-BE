@@ -2,6 +2,7 @@
 using DUPSS.Application.Features.WorkShops.Commands.Registration;
 using DUPSS.Application.Features.WorkShops.Commands.Update;
 using DUPSS.Application.Features.WorkShops.Queries.GetAll;
+using DUPSS.Application.Features.WorkShops.Queries.GetAllWorkshopRegistrationByUser;
 using DUPSS.Application.Features.WorkShops.Queries.GetById;
 using DUPSS.Domain.Abstractions.Shared;
 using MediatR;
@@ -46,6 +47,15 @@ namespace DUPSS.API.Controllers
         }
 
         // Workshop Registrations
+
+        [HttpGet("my-registrations")]
+        public async Task<IActionResult> GetAllRegistrations(
+            [FromQuery] GetAllWorkshopRegistrationByUserQuery query
+        )
+        {
+            var result = await mediator.Send(query);
+            return Ok(result);
+        }
 
         [HttpGet("registrations")]
         public async Task<IActionResult> GetAllRegistrations(
