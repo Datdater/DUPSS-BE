@@ -11,9 +11,8 @@ namespace DUPSS.API.Controllers
     public class AiChatController : ControllerBase
     {
         private readonly string _gptApiKey;
-        private const string SystemPrompt = "Bạn là một trợ lý tâm lý tận tâm, thân thiện và không phán xét. " +
-            "Hãy cung cấp thông tin chính xác, dễ hiểu và lời khuyên an toàn về các vấn đề liên quan đến ma túy, " +
-            "bao gồm tác hại, cách phòng tránh và hỗ trợ người có nguy cơ hoặc đang sử dụng. Luôn khuyến khích người dùng tìm kiếm sự giúp đỡ từ chuyên gia khi cần thiết.";
+        private const string SystemPrompt = "Bạn là trợ lý tâm lý tận tâm và không phán xét. Trả lời ngắn gọn (20–60 từ), dễ hiểu về ma túy: lịch sử, tác hại, cách phòng tránh và tư vấn hỗ trợ. Khuyến khích người dùng tìm kiếm sự giúp đỡ từ chuyên gia khi cần.";
+
 
         public AiChatController(IConfiguration configuration)
         {
