@@ -11,7 +11,6 @@ namespace DUPSS.Application.Features.Authentications.Commands.Register
 
         public required string UserName { get; set; }
         public required string Password { get; set; }
-        public required string ConfirmPassword { get; set; }
 
         [StringLength(100, MinimumLength = 2)]
         public string? FirstName { get; set; }
@@ -22,7 +21,7 @@ namespace DUPSS.Application.Features.Authentications.Commands.Register
         [Phone]
         public required string PhoneNumber { get; set; }
 
-        public DateOnly BirthDay { get; set; }
+        public DateOnly? BirthDay { get; set; }
         public required bool Gender { get; set; }
 
         public required Role Role { get; set; }

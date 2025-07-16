@@ -19,7 +19,7 @@ public class GetAllCoursesQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
             .Repository<Course>()
             .GetQueryable()
             .Include(x => x.Category)
-            .Where(x => x.Status);
+            .Where(x => true);
         if (!string.IsNullOrEmpty(request.Search))
         {
             queryable = queryable.Where(c =>

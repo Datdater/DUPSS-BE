@@ -9,10 +9,10 @@ namespace DUPSS.Domain.Entities;
 
 public class WorkshopRegistration : BaseEntity
 {
-    public string WorkshopId { get; set; }
-    public string UserId { get; set; }
-    public string Note { get; set; }
+    public required string WorkshopId { get; set; }
+    public required string UserId { get; set; }
+    public string? Note { get; set; }
 
-    public Workshop Workshop { get; set; }
-    public AppUser User { get; set; }
+    public Workshop Workshop { get; set; } = null!;
+    public AppUser User { get; set; } = null!;
 }

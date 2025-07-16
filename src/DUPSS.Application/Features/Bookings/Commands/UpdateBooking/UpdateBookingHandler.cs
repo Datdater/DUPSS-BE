@@ -19,6 +19,7 @@ namespace DUPSS.Application.Features.Bookings.Commands.UpdateBooking
             CancellationToken cancellationToken
         )
         {
+            await unitOfWork.BeginTransactionAsync();
             try
             {
                 var booking = await unitOfWork
@@ -66,10 +67,12 @@ namespace DUPSS.Application.Features.Bookings.Commands.UpdateBooking
                 }
                 await unitOfWork.Repository<BookingRequest>().UpdateAsync(booking);
                 await unitOfWork.SaveChangesAsync(cancellationToken);
+                await unitOfWork.CommitTransactionAsync();
                 return Result.Success();
             }
             catch (Exception ex)
             {
+                await unitOfWork.RollbackTransactionAsync();
                 return Result.Failure(new Error("Error.BookingUpdate", ex.Message));
             }
         }
