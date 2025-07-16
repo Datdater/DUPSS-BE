@@ -30,11 +30,6 @@ namespace DUPSS.Application.Features.Authentications.Commands.Register
             {
                 await unitOfWork.BeginTransactionAsync();
 
-                if (request.Password != request.ConfirmPassword)
-                {
-                    throw new ArgumentException("Password and Confirm Password do not match.");
-                }
-
                 var newUser = new AppUser
                 {
                     Id = Guid.NewGuid().ToString(),

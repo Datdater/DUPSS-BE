@@ -1,5 +1,6 @@
 ﻿using DUPSS.Application.Features.Bookings.Commands.CreateBooking;
 using DUPSS.Application.Features.Bookings.Commands.UpdateBooking;
+using DUPSS.Application.Features.Bookings.Queries.GetAllBookingByUser;
 using DUPSS.Application.Features.Courses.Commands.Create;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -18,6 +19,29 @@ namespace DUPSS.API.Controllers
             if (result.IsSuccess)
             {
                 return Created(string.Empty, result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet("my-bookings")]
+        [Authorize]
+        public async Task<IActionResult> GetBookingByUser()
+        {
+            var result = await mediator.Send(new GetAllBookingByUserQuery());
+            if (result.IsSuccess)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetBookings([FromQuery] GetAllBookingQuery query)
+        {
+            var result = await mediator.Send(query);
+            if (result.IsSuccess)
+            {
+                return Ok(result);
             }
             return BadRequest(result);
         }

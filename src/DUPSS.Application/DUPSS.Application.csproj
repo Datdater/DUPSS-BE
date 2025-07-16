@@ -28,7 +28,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Features\Bookings\Queries\GetAllBookingByUser\" />
+	  <Folder Include="Features\Accounts\Commands\" />
+	  <Folder Include="Features\Bookings\Queries\GetAllBookingByUser\" />
     <Folder Include="Utils\NewFolder\" />
   </ItemGroup>
 </Project>

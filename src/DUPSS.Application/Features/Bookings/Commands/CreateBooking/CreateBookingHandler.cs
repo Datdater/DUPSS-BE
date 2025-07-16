@@ -18,11 +18,12 @@ namespace DUPSS.Application.Features.Bookings.Commands.CreateBooking
         IGenerateUniqueCode generateUniqueCode
     ) : ICommandHandler<CreateBookingCommand>
     {
-        public Task<Result> Handle(
+        public async Task<Result> Handle(
             CreateBookingCommand request,
             CancellationToken cancellationToken
         )
         {
+            await unitOfWork.BeginTransactionAsync();
             try
             {
                 var userId = claimService.GetCurrentUser;
@@ -44,15 +45,17 @@ namespace DUPSS.Application.Features.Bookings.Commands.CreateBooking
                 };
                 booking.SetPendingStatus();
                 bookingRepository.AddAsync(booking);
-                return unitOfWork
-                    .SaveChangesAsync(cancellationToken)
-                    .ContinueWith(t => Result.Success(), cancellationToken);
+
+                await unitOfWork.SaveChangesAsync(cancellationToken);
+
+                await unitOfWork.CommitTransactionAsync();
+
+                return Result.Success();
             }
             catch (Exception ex)
             {
-                return Task.FromResult(
-                    Result.Failure(new Error("Error.BookingCreation", ex.Message))
-                );
+                await unitOfWork.RollbackTransactionAsync();
+                return Result.Failure(new Error("Error.BookingCreation", ex.Message));
             }
         }
     }
