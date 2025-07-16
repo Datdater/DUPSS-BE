@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using DUPSS.Domain.Repositories;
 using DUPSS.Infrastructure.Data;
 using DUPSS.Infrastructure.DbContext;
@@ -7,7 +6,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -17,9 +15,9 @@ namespace DUPSS.Infrastructure.DependencyInjection.Extentions;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPersistenceService(
-        this IServiceCollection services,
-        IConfiguration configuration
-    )
+     this IServiceCollection services,
+     IConfiguration configuration
+ )
     {
         services.AddDbContext<DUPSSContext>(opt =>
             opt.UseSqlServer(configuration.GetConnectionString("default"))

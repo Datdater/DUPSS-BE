@@ -35,4 +35,6 @@ public class Course : BaseEntity
 
     [ForeignKey("CreatedBy")]
     public AppUser Creator { get; set; }
+
+    public ICollection<CourseSection> CourseSections { get; set; } = [];
 }

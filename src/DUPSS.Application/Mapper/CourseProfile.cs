@@ -13,7 +13,9 @@ public class CourseProfile : AutoMapper.Profile
 {
     public CourseProfile()
     {
-        CreateMap<Course, DUPSS.Application.Models.Courses.GetAllCoursesResponse>();
+        CreateMap<Course, DUPSS.Application.Models.Courses.GetAllCoursesResponse>()
+            .ForMember(x => x.CategoryName, y => y.MapFrom(z => z.Category.CateName));
         CreateMap<PagedResult<Course>, PagedResult<GetAllCoursesResponse>>();
+        CreateMap<Course, GetCourseResponse>();
     }
 }

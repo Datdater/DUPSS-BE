@@ -20,4 +20,7 @@
     <ProjectReference Include="..\DUPSS.Application\DUPSS.Application.csproj" />
     <ProjectReference Include="..\DUPSS.Infrastructure\DUPSS.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwRoot\uploads\" />
+  </ItemGroup>
 </Project>
